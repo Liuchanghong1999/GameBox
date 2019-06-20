@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml</file>
+		<file>qml/entities</file>
+		<file>qml/levels</file>
+        <file>qml/editorElements</file>
+        <file>qml/music</file>        
+    </qresource>
+</RCC>
+
