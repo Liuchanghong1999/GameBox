@@ -5,174 +5,264 @@ import "." as Levels
 
 Levels.LevelBase {
   id: level
-  // we need to specify the width to get correct debug draw for our physics
-  // the PhysicsWorld component fills it's parent by default, which is the viewPort Item of the gameScene and this item uses the size of the level
-  // NOTE: thy physics will also work without defining the width here, so no worries, you can ignore it untill you want to do some physics debugging
-  width: 42 * gameScene.gridSize // 42 because our last tile is a size 30 Ground at row 12
-
-  // you could draw your level on a graph paper and then add the tiles here only by defining their row, column and size
-
-//  SmallTree{
-//      row:2
-//      column: 2
-//      size: 1
-//  }
+  width: 42 * gameScene.gridSize
 
 
-  OpponentWalker{
-    x:25*18
-  }
-
-  Opponentjumper{
-      x:25*33
-
-  }
-
-//  BigTree{
-//      row:6
-//      column: 1
-//      size: 1
-//  }
-
-  Ground {
-    row: 0
-    column: 1
-    size: 3
-  }
-
-
-
-    Springboard{
-        row:4
-        column: 3
-        size:3
-
+    Repeater{
+        model:4
+        BottomGround{
+            row:0
+            column:index
+            size:8
+        }
     }
 
-  Ground {
-    row: 8
-    column: 1
-    size: 2
-  }
+    Ground{
+        row:0
+        column: 4
+        size: 8
+    }
 
-  HorizontalFloatSpringboard{
-      row:7
-      column: 7
-      size: 3
-      starting: row*gameScene.gridSize
-      farthest: 250
-  }
+    Repeater{
+        model: 4
+        BottomGround{
+            row:11
+            column: index
+            size: 1
+        }
+    }
 
-//  VerticalFloatingSpringboard{
-//      row:11
-//      column: 4
-//      size: 5
-//      starting:level.height-(column+1)*gameScene.gridSize
-//      farthest: 100
-//  }
+    Ground{
+        row:11
+        column: 4
+        size: 1
+     }
 
-//  OpponentWalker{
-//      x:5*25
-//      y:level.height-(column+1)*gameScene.gridSizev-8
-//  }
 
-  Platform {
-    row: 3
-    column: 6
-    size: 4
-  }
+    Repeater{
+        model: 4
+        BottomGround{
+            row:15
+            column: index
+            size: 1
+        }
+    }
 
-  JumpingBed{
-      x:25*3
-      y: level.height - (7+1)*gameScene.gridSize
-  }
+    Ground{
+        row:15
+        column: 4
+        size: 1
+     }
 
-  Heart{
-            x:5*25
-            y:level.height-(column+1)*gameScene.gridSizev-8
-  }
+    Repeater{
+        model: 4
+        BottomGround{
+            row:19
+            column: index
+            size: 1
+        }
+    }
 
-  Surprise{
-      row:6
-      column: 6
-      size: 1
-  }
+    Ground{
+        row:19
+        column: 4
+        size: 1
+     }
 
-  AttackPlant{
-      row:22
-      column: 4
-      attack_distance: 25*3
-      direction: 1
-  }
+    Repeater{
+        model: 4
+        BottomGround{
+            row:23
+            column: index
+            size: 1
+        }
+    }
 
-  Repeater{
-  model: 5
-  Star{
-      x:75+index*25
-      y: level.height - (4+1)*gameScene.gridSize
-  }
-  }
+    Ground{
+        row:23
+        column: 4
+        size: 1
+     }
 
-  Apple{
-    x:75
-      y: level.height - (4+1)*gameScene.gridSize
+    Repeater{
+        model: 4
+        BottomGround{
+            row:27
+            column: index
+            size: 1
+        }
+    }
 
-  }
+    Ground{
+        row:27
+        column: 4
+        size: 1
+     }
 
-  Barrier{
-    row:10
-    column: 3
-    size:1
-  }
+    Repeater{
+        model: 4
+        BottomGround{
+            row:31
+            column: index
+            size: 1
+        }
+    }
 
-  Platform {
-    row: 11
-    column: 3
-    size: 2
-  }
-  Ground {
-    row: 12
-    column: 1
-    size: 30
-  }
-  Platform {
-    row: 17
-    column: 3
-    size: 10
-  }
+    Ground{
+        row:31
+        column: 4
+        size: 1
+     }
 
-  BottomGround{
-//      id:bottomground
-      row:0
-      column: 0
-      size: 6
-  }
+    Repeater{
+        model: 5
+        BottomGround{
+            row:35
+            column: index
+            size: 1
+        }
+    }
 
-  BottomGround{
-            id:bottomground
-      row:13
-      column: 0
-      size:50
-  }
+    Ground{
+        row:35
+        column: 5
+        size: 1
+    }
 
-  FinalStation{
-     id:finalStation
-     x:gameScene.gridSize*bottomground.size
 
-  }
+    Repeater{
+        model: 2
+        BottomGround{
+            row:39
+            column: index
+            size: 1
+        }
+    }
 
-  Thorn{
-      row:42
-      column: 1
-      size:3
-      //direction: -1
+    Ground{
+        row:39
+        column: 2
+        size: 1
+     }
 
-  }
+    Repeater{
+        model: 4
+        BottomGround{
+            row:43
+            column: index
+            size: 1
+        }
+    }
 
-  Wall{
-      row:45
-      column: 1
-      size: 3
-      direction: -1
-  }
+    Ground{
+        row:43
+        column: 4
+        size: 1
+     }
+
+    Repeater{
+        model: 2
+        BottomGround{
+            row:47
+            column: index
+            size: 1
+        }
+    }
+
+    Ground{
+        row:47
+        column: 2
+        size: 1
+     }
+
+    Repeater{
+        model: 4
+        BottomGround{
+            row:50
+            column: index
+            size: 1
+        }
+    }
+
+    Ground{
+        row:50
+        column: 4
+        size: 1
+     }
+
+    Coin{
+        x: gameScene.gridSize*11
+        y: level.height- (8+1)*gameScene.gridSize
+    }
+
+    Repeater{
+        model:2
+        Coin{
+            x: gameScene.gridSize*13
+            y: level.height- (8+index)*gameScene.gridSize
+        }
+    }
+
+    Coin{
+        x: gameScene.gridSize*15
+        y: level.height- (8+1)*gameScene.gridSize
+    }
+
+
+    Repeater{
+        model:2
+        Coin{
+            x: gameScene.gridSize*17
+            y: level.height- (8+index)*gameScene.gridSize
+        }
+    }
+
+    Coin{
+        x: gameScene.gridSize*19
+        y: level.height- (8+1)*gameScene.gridSize
+    }
+
+
+    Repeater{
+        model:2
+        Coin{
+            x: gameScene.gridSize*21
+            y: level.height- (8+index)*gameScene.gridSize
+        }
+    }
+
+
+    Coin{
+        x: gameScene.gridSize*23
+        y: level.height- (8+1)*gameScene.gridSize
+    }
+
+
+    Repeater{
+        model:2
+        Coin{
+            x: gameScene.gridSize*25
+            y: level.height- (8+index)*gameScene.gridSize
+        }
+    }
+
+    Repeater{
+        model:10
+        Coin{
+            x: gameScene.gridSize*27  + (2*index-2) * gameScene.gridSize
+            y: level.height- (8 +1)*gameScene.gridSize
+        }
+    }
+
+    BottomGround{
+        id:last
+        row:51
+        column: 0
+        size: 20
+    }
+
+    FinalStation{
+        x:55*25
+        anchors.bottom: last.top
+    }
 }

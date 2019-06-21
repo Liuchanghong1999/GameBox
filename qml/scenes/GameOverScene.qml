@@ -7,12 +7,12 @@ import QtQuick 2.0
 Scene{
     opacity:0
 
+    visible: opacity>0
     signal onceAgain
     signal exitLevel
 
     Rectangle
-    {
-        color: "white"
+    {        color: "white"
         anchors.fill: parent
 
         Text {
@@ -20,6 +20,7 @@ Scene{
             anchors.verticalCenter: parent.verticalCenter
             text: "Game Over!"
         }
+
         Text {
             width: 100
             height: 100
@@ -49,5 +50,4 @@ Scene{
             }
         }
     }
-
 }

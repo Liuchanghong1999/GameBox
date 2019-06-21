@@ -7,7 +7,6 @@ SceneBase {
 
     signal backPressed
     signal levelPressed(string selectedLevel)
-
     // background
     Rectangle {
         id: background
@@ -61,6 +60,7 @@ SceneBase {
 
     // show selectable levels
     Grid {
+      id:grid
       anchors.centerIn: parent
       spacing: 10
       columns: 4

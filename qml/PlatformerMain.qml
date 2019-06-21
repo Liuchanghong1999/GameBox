@@ -1,5 +1,5 @@
-//author:yanyuping
-//date:2018.6.20
+////author:yanyuping
+////date:2018.6.20
 
 //import Felgo 3.0
 //import QtQuick 2.0
@@ -20,9 +20,7 @@
 //  GameScene {
 //    id: gameScene
 //  }
-
 //}
-
 
 
 import Felgo 3.0
@@ -66,6 +64,7 @@ GameWindow {
       id: selectLevelScene
       onLevelPressed: {
         gameScene.setLevel(selectedLevel)
+        gameScene.resetLevel()
         gameScene.visible=true
         gameWindow.state = "game"
       }
@@ -76,30 +75,37 @@ GameWindow {
       id: gameScene
       visible: false
       onExitLevelPressed: {
-          gameScene.visible=false
-          selectLevelScene.opacity=1
+          gameWindow.state="selectLevel"
+          gameScene.stopLevel()
       }
 
       onPlayer_died: {
-          gameScene.opacity=0
+          gameScene.stopLevel()
           gameWindow.state="gameover"
-          selectLevelScene.opacity=0
+      }
+
+      onGame_win: {
+          gameWindow.state="gamewin";
       }
     }
 
 
     HelpScene {
         id: helpScene
-
-//        onBackPressed: {
-//            gameWindow.state = "menu"
-//        }
     }
 
     GameOverScene{
         id:gameOverScene
-        onOnceAgain: gameWindow.state = "once_again"
-        onExitLevel: gameWindow.state = "exit_level"
+        onOnceAgain:{ gameWindow.state = "once_again"; gameScene.resetLevel()}
+        onExitLevel:{
+            gameScene.stopLevel()
+            gameWindow.state="selectLevel"
+        }
+    }
+
+    GameWinScene{
+        id:gameWinScene
+        onBackPressed: gameWindow.state="selectLevel";
     }
 
     // states
@@ -126,8 +132,6 @@ GameWindow {
           name: "game"
           PropertyChanges {target: gameScene; opacity: 1}
           PropertyChanges {target: gameWindow; activeScene: gameScene}
-//          PropertyChanges {target: selectLevelScene; opacity:0}
-//          PropertyChanges {target: gameOverScene; opacity:0}
         },
         State{
             name:"gameover"
@@ -142,7 +146,22 @@ GameWindow {
         State {
             name: "exit_level"
             PropertyChanges {target: selectLevelScene; opacity:1  }
+            PropertyChanges {target:gameOverScene; opacity:0}
+            PropertyChanges {target:gameScene; visible:false}
             PropertyChanges {target: gameWindow; activeScene: selectLevelScene}
+        },
+        State {
+            name: "gamewin"
+            PropertyChanges {target: gameWinScene; opacity:1}
+            PropertyChanges {target: gameWindow; activeScene:gameWinScene}
+//            PropertyChanges {target: gameScene; opacity:0}
+        },
+        State {
+            name: "nextLevel"
+            PropertyChanges {
+                target: object
+
+            }
         }
 
     ]

@@ -88,4 +88,12 @@ PlatformerEntityBaseDraggable {
     // for every killed opponent, the time gets set back a little bit
 //    gameScene.time -= 5
   }
+
+  function stop()
+  {
+      alive = false
+      hideTimer.start()
+      if(variationType == "walker")
+        audioManager.stopSound("opponentWalkerDie")
+  }
 }

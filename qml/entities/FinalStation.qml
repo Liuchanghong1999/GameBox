@@ -8,26 +8,18 @@ EntityBase {
   id: finalStation
   entityType: "finalStation"
 
-  width: 10
-  height: 460
+  width: 30
+  height: 34
   anchors.bottom: parent.bottom
 
-  Rectangle{
+  Image {
      anchors.fill: parent
-     color: "green"
+     source: "../../assets/lalala/finish.png"
   }
 
 
   BoxCollider {
     anchors.fill: parent
     bodyType: Body.Static
-//    fixture.onBeginContact: {
-//      var otherEntity = other.getBody().target
-//      if(otherEntity.entityType === "player") player.contacts++
-//    }
-//    fixture.onEndContact: {
-//      var otherEntity = other.getBody().target
-//      if(otherEntity.entityType === "player") player.contacts--
-//    }
   }
 }

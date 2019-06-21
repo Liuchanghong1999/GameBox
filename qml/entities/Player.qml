@@ -3,7 +3,7 @@
 
 import Felgo 3.0
 import QtQuick 2.0
-import "../music"
+import "../common"
 
 EntityBase {
   id: player
@@ -20,6 +20,7 @@ EntityBase {
   property int life:1
 
   signal died
+  signal gameWin
 //  property alias controller: controller
 
   property int contacts: 0
@@ -66,12 +67,16 @@ EntityBase {
             startInvincibility(starInvincibilityTime)
         }
 
+        if(otherEntity.entityType === "finalStation"){
+
+            gameWin()
+        }
+
     }
 
     fixture.onEndContact: {
         if(otherEntity.entityType=== "thorn") {
             die(false);
-            console.log("You die!!!!??????????????")
         }
     }
 
@@ -115,11 +120,10 @@ EntityBase {
 
         if(playerLowestY < oppLowestY - 5) {
           player.kiiljump()
-          console.debug("kill opponent")
+          //console.debug("kill opponent")
           otherEntity.die()
 
         }
-
       }
       // else if colliding with another solid object...
     }
@@ -149,23 +153,8 @@ EntityBase {
 
     collisionTestingOnlyMode: true
 
-//    fixture.onBeginContact: {
-//      var otherEntity = other.getBody().target
-//      if(otherEntity.entityType==="surprise")
-//      console.log("OKKKKKKKKKK")
-//  }
-}
+    }
 
-//  TwoAxisController {
-//    id: controller
-//    onInputActionPressed: {
-//      console.debug("key pressed actionName " + actionName)
-//      if(actionName == "up") {
-//        jump()
-//      }
-//    }
-//     onXAxisChanged: changeSpriteOrientation()
-//  }
 
   // this timer is used to slow down the players horizontal movement. the linearDamping property of the collider works quite similar, but also in vertical direction, which we don't want to be slowed
   Timer {
@@ -239,9 +228,8 @@ EntityBase {
         console.log(player.life + " + "+ invincible)
         audioManager.playSound("playerDie")
 
-        gameScene.resetLevel()
+        //gameScene.resetLevel()
         died()
-
       }
 
       if(invincible)
@@ -316,14 +304,14 @@ EntityBase {
     y = 100
 
     // reset velocity
-    collider.linearVelocity.x = 0
-    collider.linearVelocity.y = 0
+//    collider.linearVelocity.x = 0
+//    collider.linearVelocity.y = 0
+      collider.linearVelocity = Qt.point(0,0)
 
     // reset score
     score = 0
 
-    // reset isBig
-//    isBig = false
+    //resetContacts()
 
 //    // reset invincibility
     invincible = false
@@ -331,6 +319,17 @@ EntityBase {
     invincibilityWarningTimer.stop()
     invincibilityOverlayImage.opacity = 0
     audioManager.stopSound("playerInvincible")
+  }
+
+  function stop(){
+      score = 0
+      collider.linearVelocity = Qt.point(0,0)
+      invincible = false
+      invincibilityTimer.stop()
+      invincibilityWarningTimer.stop()
+      invincibilityOverlayImage.opacity = 0
+      audioManager.stopSound("playerDie")
+      audioManager.stopSound("playerInvincible")
   }
 
   function resetContacts() {

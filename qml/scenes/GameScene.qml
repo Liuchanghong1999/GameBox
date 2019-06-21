@@ -17,9 +17,13 @@ Scene {
   gridSize: 25
 
   opacity: 0
+  visible: opacity > 0
+
   signal exitLevelPressed
 
   signal player_died
+
+  signal game_win
 
   property int offsetBeforeScrollingStarts: 240
 
@@ -106,6 +110,7 @@ Scene {
     Loader {
       id: loader
       source: activeLevelFileName ? "../levels/" + activeLevelFileName : ""
+      onSourceChanged: player.resetContacts()
       onLoaded: {
         // store the loaded level as activeLevel for easier access
         activeLevel = item
@@ -124,6 +129,9 @@ Scene {
          player_died()
       }
 
+      onGameWin: {
+          game_win()
+      }
     }
 
     ResetSensor {
@@ -133,7 +141,7 @@ Scene {
       anchors.bottom: viewPort.bottom
       // if the player collides with the reset sensor, he goes back to the start
       onContact: {
-          gameScene.resetLevel()
+        //gameScene.resetLevel()
         player_died()
 
       }
@@ -147,28 +155,49 @@ Scene {
   }
 
   Rectangle {
-//      anchors.right: parent.right
-      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.right: parent.right
       anchors.top: parent.top
       height: 100
       width: 100
-      color: "red"
-      opacity: 0.4
+      color: "transparent"
+      //opacity: 0.4
 
-    Text {
-      anchors.centerIn: parent
-      text: "Your score" + player.score
-      color: "white"
-      font.pixelSize: 9
+    Image {
+        id:corn
+          //anchors.centerIn: parent
+          width: 25
+          height: 25
+          source: "../../assets/lalala/coin.png"
     }
 
     Text {
-        text: "Life: " + player.life
+      anchors.left: heart.right
+      text: " X " + player.score
+      color: "white"
+      font.pixelSize: 11
+    }
+
+    Image {
+        width: 20
+        height: 20
+        id: heart
+        anchors.top: corn.bottom
+        anchors.topMargin: 10
+        source: "../../assets/lalala/heart.png"
+    }
+    Text {
+        anchors.left: heart.right
+        anchors.top: corn.bottom
+        anchors.topMargin: 10
+        text: " X " + player.life
+        color: "white"
+        font.pixelSize: 11
     }
 
     Text {
         anchors.bottom: parent.bottom
         text: player.invincible == true ? "Invincible!": ""
+        font.pixelSize: 11
     }
   }
 
@@ -176,12 +205,13 @@ Scene {
       anchors.top: parent.top
       anchors.left: parent.left
       anchors.leftMargin: 40
-      height: 60
+      height: 20
       width: 60
       color: "yellow"
       opacity: 0.4
       Text {
           text: "退出本关"
+          font.pixelSize: 11
       }
       MouseArea{
           anchors.fill: parent
@@ -282,8 +312,9 @@ Scene {
   // switches from test to edit mode
   function resetLevel() {
     // reset player
-    player.reset()
 
+    player.reset()
+    console.log("Player.x :" + player.collider.linearVelocity.x + "Player.y "+ player.collider.linearVelocity.y)
     // reset opponents
     var opponents = entityManager.getEntityArrayByType("opponent")
     for(var opp in opponents) {
@@ -307,13 +338,20 @@ Scene {
             apples[apple].reset()
         }
 
-//    // reset time and timer
-//    time = 0
-//    levelTimer.restart()
+    var hearts = entityManager.getEntityArrayByType("heart")
+        for(var heart in hearts)
+        {
+            hearts[heart].reset()
+        }
   }
 
-
-
+function stopLevel() {
+    player.stop()
+    var opponents = entityManager.getEntityArrayByType("opponent")
+    for(var opp in opponents) {
+      opponents[opp].stop()
+    }
+}
 
 //  /**
 // * BACKGROUND -----------------------------------------

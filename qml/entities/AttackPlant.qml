@@ -52,7 +52,7 @@ EntityBase {
             attac_flag++;
             console.log("lalalallalala" + attac_flag)
             if(attac_flag==1){
-                player.die(false);
+                player.die(true);
             }
         }
     }
@@ -78,12 +78,15 @@ EntityBase {
       id:timer2
       running: true
       repeat: true
-      interval: 2000
+      interval: 4000
       onTriggered: {
           bullet.x=0
           timer1.running=true
       }
   }
 
+  function stop(){
+        timer2.running=false
+    }
 }
 

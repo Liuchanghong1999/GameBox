@@ -16,7 +16,7 @@ TiledEntityBase {
 
   Column {
     id: tileRow
-    Star{ id:star; collected: true; /*starActive: false*/}
+    Coin{ id:coin; collected: true; /*starActive: false*/}
     Tile {
         id:box
         image: "../../assets/lalala/surprise.png"
@@ -85,7 +85,7 @@ TiledEntityBase {
       if(otherEntity.entityType==="player")
       strike++
       if(strike==1){
-          star.collected=false
+          coin.collected=false
       }
     }
   }
@@ -94,12 +94,12 @@ TiledEntityBase {
     id: circlecollider
 
     // make the collider a little smaller than the sprite
-    radius: star.width / 2 - 5
+    radius: coin.width / 2 - 5
 
     x:5 ; y:5
 
     // disable collider when coin is collected
-    active: !star.collected
+    active: !coin.collected
 
     // the collider is static (shouldn't move) and should only test
     // for collisions
@@ -108,12 +108,12 @@ TiledEntityBase {
 
     fixture.onBeginContact:{
       var otherEntity = other.getBody().target
-      if(otherEntity.entityType === "player") star.collect()
+      if(otherEntity.entityType === "player") coin.collect()
     }
   }
 
   function reset(){
-      star.collected=true
+      coin.collected=true
       strike=0
   }
 }

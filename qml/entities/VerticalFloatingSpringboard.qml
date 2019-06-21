@@ -10,7 +10,7 @@ TiledEntityBase {
 
   property int direction: 1
   property int farthest : gameScene.gridSize
-  property int starting: 0
+  property int starting:level.height-(column+1)*gameScene.gridSize
   // the opponents jumpForce in vertical and horizontal
   // direction
   size: 1
@@ -93,8 +93,12 @@ TiledEntityBase {
       repeat: true
       interval: 1
       onTriggered: {
-          if(timer1.running===true) otherEntity.y--
-          if(timer2.running===true) otherEntity.y++
+          if(timer1.running===true) player.y--
+          if(timer2.running===true) player.y++
       }
   }
+
+
+
+
 }

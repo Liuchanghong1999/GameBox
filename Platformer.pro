@@ -44,7 +44,6 @@ DISTFILES += \
     qml/entities/OriginalStation.qml \
     qml/entities/FinalStation.qml \
     qml/entities/JumpingBed.qml \
-    qml/entities/Star.qml \
     qml/entities/Stars.qml \
     qml/entities/Opponent.qml \
     qml/entities/OpponentWalker.qml \
@@ -62,5 +61,7 @@ DISTFILES += \
     qml/scenes/SelectLevelScene.qml \
     qml/music/MenuButton.qml \
     qml/levels/Level_02.qml \
-    qml/scenes/GameOverScene.qml
+    qml/scenes/GameOverScene.qml \
+    qml/entities/Coin.qml \
+    qml/common/Level_03.qml
 
