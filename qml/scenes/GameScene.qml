@@ -24,6 +24,7 @@ Scene {
   signal player_died
 
   signal game_win
+  signal handCoin()
 
   property int offsetBeforeScrollingStarts: 240
 
@@ -34,7 +35,7 @@ Scene {
   // countdown shown at level start
   property int countdown: 0
   property alias loader: loader
-
+  property alias player:player
 
 
   function setLevel(fileName) {
@@ -53,7 +54,7 @@ Scene {
 
   // ... followed by 2 parallax layers with trees and grass
   ParallaxScrollingBackground {
-    sourceImage: "../assets/background/layer3.png"
+    sourceImage: "../assets/background/111.png"
     anchors.bottom: gameScene.gameWindowAnchorItem.bottom
     anchors.horizontalCenter: gameScene.gameWindowAnchorItem.horizontalCenter
     // we move the parallax layers at the same speed as the player
@@ -102,11 +103,6 @@ Scene {
       }
     }
 
-    // you could load your levels Dynamically with a Loader component here
-//    Level_01 {
-//      id: level1
-//    }
-
     Loader {
       id: loader
       source: activeLevelFileName ? "../levels/" + activeLevelFileName : ""
@@ -114,7 +110,6 @@ Scene {
       onLoaded: {
         // store the loaded level as activeLevel for easier access
         activeLevel = item
-        // restarts the countdown
       }
     }
 
@@ -130,6 +125,7 @@ Scene {
       }
 
       onGameWin: {
+          handCoin()
           game_win()
       }
     }
@@ -142,14 +138,13 @@ Scene {
       // if the player collides with the reset sensor, he goes back to the start
       onContact: {
         //gameScene.resetLevel()
-        player_died()
-
+        player.die(true)
+        //player_died()
       }
       // this is just for you to see how the sensor moves, in your real game, you should position it lower, outside of the visible area
       Rectangle {
         anchors.fill: parent
-        color: "yellow"
-        opacity: 0.5
+        color: "transparent"
       }
     }
   }
@@ -163,33 +158,34 @@ Scene {
       //opacity: 0.4
 
     Image {
-        id:corn
-          //anchors.centerIn: parent
+        id:coin_img
           width: 25
           height: 25
           source: "../../assets/lalala/coin.png"
     }
 
     Text {
-      anchors.left: heart.right
-      text: " X " + player.score
+      anchors.left: coin_img.right
+      text: "   X " + player.score
       color: "white"
       font.pixelSize: 11
     }
 
     Image {
-        width: 20
-        height: 20
-        id: heart
-        anchors.top: corn.bottom
+        width: 18
+        height: 18
+        id: heart_img
+        anchors.top: coin_img.bottom
         anchors.topMargin: 10
+        anchors.left: coin_img.left
+        anchors.leftMargin: 5
         source: "../../assets/lalala/heart.png"
     }
     Text {
-        anchors.left: heart.right
-        anchors.top: corn.bottom
+        anchors.left: heart_img.right
+        anchors.top: coin_img.bottom
         anchors.topMargin: 10
-        text: " X " + player.life
+        text: "   X " + player.life
         color: "white"
         font.pixelSize: 11
     }
@@ -210,6 +206,8 @@ Scene {
       color: "yellow"
       opacity: 0.4
       Text {
+          anchors.horizontalCenter: parent.horizontalCenter
+          anchors.verticalCenter: parent.verticalCenter
           text: "退出本关"
           font.pixelSize: 11
       }
@@ -314,8 +312,8 @@ Scene {
     // reset player
 
     player.reset()
-    console.log("Player.x :" + player.collider.linearVelocity.x + "Player.y "+ player.collider.linearVelocity.y)
-    // reset opponents
+    player.resetContacts()
+      // reset opponents
     var opponents = entityManager.getEntityArrayByType("opponent")
     for(var opp in opponents) {
       opponents[opp].reset()

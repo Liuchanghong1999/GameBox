@@ -3,6 +3,7 @@
 
 import Felgo 3.0
 import QtQuick 2.0
+import "../common"
 
 Scene{
     opacity:0
@@ -12,36 +13,69 @@ Scene{
     signal exitLevel
 
     Rectangle
-    {        color: "white"
+    {
+        color: "lightblue"
         anchors.fill: parent
 
+        Image {
+            width: 50
+            height:50
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: txt.top
+            source: "/root/yypGame/assets/backgroundImage/hh1.jpg"
+        }
+
         Text {
+            id:txt
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             text: "Game Over!"
         }
 
-        Text {
-            width: 100
-            height: 100
-            color: "red"
+        Rectangle {
+            width: 80
+            height: 30
             anchors.right: parent.right
+            anchors.rightMargin: 40
             anchors.bottom: parent.bottom
-            text: "再来一次"
-            MouseArea{
+            anchors.bottomMargin: 40
+            radius: 10
+            color: "green"
+
+            MenuButton {
+                text: "再来一次"
+                width: 36
+                height: 36
+                anchors.centerIn: parent
+                buttonText.color: "lightgreen"
+                buttonText.font.pixelSize: 20
+          }
+          MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                        onceAgain()
+                    onceAgain()
                 }
             }
         }
-        Text {
-            width: 100
-            height: 100
-            color: "red"
+
+        Rectangle {
+            width: 80
+            height: 30
             anchors.left: parent.left
+            anchors.leftMargin: 40
             anchors.bottom: parent.bottom
-            text: "不玩了"
+            anchors.bottomMargin: 40
+            radius: 10
+            color: "green"
+
+            MenuButton {
+                text: "不玩了"
+                width: 36
+                height: 36
+                anchors.centerIn: parent
+                buttonText.color: "lightgreen"
+                buttonText.font.pixelSize: 20
+          }
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
@@ -49,5 +83,7 @@ Scene{
                 }
             }
         }
+
+
     }
 }

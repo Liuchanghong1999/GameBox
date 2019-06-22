@@ -53,3 +53,4 @@ TiledEntityBase {
     collidesWith: Box.Category1 | Box.Category2 | Box.Category3 | Box.Category4
   }
 }
+

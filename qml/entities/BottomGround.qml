@@ -17,7 +17,7 @@ TiledEntityBase {
       model: size
       Tile {
         //pos: "mid_pos"
-        image: "../../assets/ground/hahaha/bottom.png"
+        image: "../../assets/ground/bottom.png"
       }
     }
   }

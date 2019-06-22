@@ -5,3 +5,4 @@ Item {
   height: gameScene.gridSize * 13 // 32 * 10 = 320
 }
 
+

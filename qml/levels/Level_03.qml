@@ -129,7 +129,6 @@ Levels.LevelBase {
       }
   }
 
-
   Repeater{
       model:5
       OpponentWalker{
@@ -137,6 +136,5 @@ Levels.LevelBase {
           y: level.height - (7+1)* gameScene.gridSize
       }
   }
-
 
 }

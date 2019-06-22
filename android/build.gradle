@@ -1,10 +1,11 @@
 buildscript {
     repositories {
+        maven { url 'https://maven.google.com' }
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 
@@ -19,7 +20,11 @@ allprojects {
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:support-core-utils:27.1.0"
+    implementation "com.android.support:appcompat-v7:27.1.0"
+
 }
 
 android {
@@ -37,8 +42,13 @@ android {
      *******************************************************/
 
     compileSdkVersion androidCompileSdkVersion.toInteger()
-
     buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+      applicationId = productIdentifier
+      versionCode = productVersionCode.toInteger()
+      versionName = productVersionName
+    }
 
     sourceSets {
         main {
@@ -57,3 +67,4 @@ android {
         abortOnError false
     }
 }
+

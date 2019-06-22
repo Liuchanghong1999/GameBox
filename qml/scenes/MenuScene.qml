@@ -5,20 +5,22 @@ import "../common"
 SceneBase {
     id: menuScene
 
+    opacity: 0
+    visible: opacity>0
+
   signal selectLevelPressed
     signal helpScenePressed
+    signal shopPressed
+    signal exit
+
     // background
     Rectangle {
         id: background
 
         anchors.fill: parent.gameWindowAnchorItem
 
-        //背景颜色渐变
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "#4595e6" }
-            GradientStop { position: 0.9; color: "#80bfff" }
-            GradientStop { position: 0.95; color: "#009900" }
-            GradientStop { position: 1.0; color: "#804c00" }
+        Image {
+            source: "../../assets/backgroundImage/bg1.jpg"
         }
     }
 
@@ -34,12 +36,12 @@ SceneBase {
         anchors.margins: 5
 
         // background color
-        color: "#cce6ff"
+        color: "lightgreen"
 
         radius: height / 4
 
         // header image
-        MultiResolutionImage {
+        Image {
             fillMode: Image.PreserveAspectFit
 
             anchors.top: parent.top
@@ -53,7 +55,7 @@ SceneBase {
     }
 
     PlatformerImageButton {
-        id: playButton
+        id: levelButton
 
         image.source: "../../assets/ui/playButton.png"
 
@@ -62,9 +64,9 @@ SceneBase {
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: header.bottom
-        anchors.topMargin: 40
+        anchors.topMargin: 20
 
-        color: "#cce6ff"
+        color: "lightgreen"
 
         radius: height / 4
         borderColor: "transparent"
@@ -74,8 +76,10 @@ SceneBase {
         }
     }
 
+
+
     PlatformerImageButton {
-        id: levelSceneButton
+        id: helpButton
 
         image.source: "../../assets/ui/levelsButton.png"
 
@@ -83,18 +87,36 @@ SceneBase {
         height: 40
 
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: playButton.bottom
-        anchors.topMargin: 30
+        anchors.top: levelButton.bottom
+        anchors.topMargin: 20
 
-        color: "#cce6ff"
+        color: "lightgreen"
+
+        radius: height / 4
+        borderColor: "transparent"
+
+        onClicked: helpScenePressed()
+    }
+
+    PlatformerImageButton {
+        id: shopButton
+
+        image.source: "../../assets/ui/playButton.png"
+
+        width: 150
+        height: 40
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: helpButton.bottom
+        anchors.topMargin: 20
+
+        color: "lightgreen"
 
         radius: height / 4
         borderColor: "transparent"
 
         onClicked: {
-            levelScene.state = "myLevels"
-            levelScene.subState = "createdLevels"
-            helpScenePressed()
+              onClicked: shopPressed()
         }
     }
 
@@ -123,4 +145,34 @@ SceneBase {
             }
         }
     }
+
+    Rectangle{
+        anchors.right: parent.right
+        anchors.rightMargin: dp(10)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: dp(10)
+        width: 60
+        height: 20
+        radius: 5
+        color: "lightgreen"
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            text: "退出游戏"
+            font.pixelSize: sp(14)
+        }
+       MouseArea{
+           anchors.fill: parent
+           hoverEnabled: true
+           onEntered: {
+               cursorShape=Qt.OpenHandCursor
+               parent.opacity=0.8
+           }
+           onExited: {
+               parent.opacity=1.0
+           }
+           onClicked: exit()
+       }
+    }
+
 }

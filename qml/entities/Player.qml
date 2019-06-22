@@ -17,7 +17,7 @@ EntityBase {
   property int score: 0
     property int starInvincibilityTime: 4000
   property bool invincible: false
-  property int life:1
+  property int life:0
 
   signal died
   signal gameWin
@@ -53,7 +53,6 @@ EntityBase {
 
         if(otherEntity.entityType=== "opponent" || otherEntity.entityType=== "thorn") {
             die(false);
-            console.log("You die!!!!??????????????")
         }
 
 //        if(otherEntity.entityType === "plant") { console.log(life);die(false)}
@@ -74,11 +73,12 @@ EntityBase {
 
     }
 
-    fixture.onEndContact: {
-        if(otherEntity.entityType=== "thorn") {
-            die(false);
-        }
-    }
+//    fixture.onEndContact: {
+//        var otherEntity = other.getBody().target
+//        if(otherEntity.entityType=== "thorn") {
+//            die(false);
+//        }
+//    }
 
     // limit the horizontal velocity
     onLinearVelocityChanged: {
@@ -119,9 +119,9 @@ EntityBase {
         var oppLowestY = otherEntity.y + otherEntity.height
 
         if(playerLowestY < oppLowestY - 5) {
-          player.kiiljump()
+            player.kiiljump()
           //console.debug("kill opponent")
-          otherEntity.die()
+            otherEntity.die()
 
         }
       }
@@ -220,24 +220,26 @@ EntityBase {
   }
 
   function die(dieImmediately) {
-      console.log("dieImmediayely: "+dieImmediately+ " invincible:"+invincible)
+      //console.log("dieImmediayely: "+dieImmediately+ " invincible:"+invincible)
 
-      if(dieImmediately || (!invincible && player.life==1))
+      if(dieImmediately || (!invincible && player.life==0))
       {
              // ...die
         console.log(player.life + " + "+ invincible)
         audioManager.playSound("playerDie")
 
+        if(life>0)
+            life--
         //gameScene.resetLevel()
         died()
       }
 
-      if(invincible)
+      else if(invincible)
       {
           //do nothing
       }
 
-      if((player.life>1) && !invincible)
+      else if((player.life>0) && !invincible)
       {
           player.life--
       }
@@ -323,6 +325,7 @@ EntityBase {
 
   function stop(){
       score = 0
+
       collider.linearVelocity = Qt.point(0,0)
       invincible = false
       invincibilityTimer.stop()

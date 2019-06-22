@@ -11,7 +11,7 @@ EntityBase {
   width: 10
   height: 460
   anchors.bottom: parent.bottom
-  x:0
+  x:-2
 
   Rectangle{
      anchors.fill: parent
@@ -22,13 +22,5 @@ EntityBase {
   BoxCollider {
     anchors.fill: parent
     bodyType: Body.Static
-//    fixture.onBeginContact: {
-//      var otherEntity = other.getBody().target
-//      if(otherEntity.entityType === "player") player.contacts++
-//    }
-//    fixture.onEndContact: {
-//      var otherEntity = other.getBody().target
-//      if(otherEntity.entityType === "player") player.contacts--
-//    }
   }
 }
