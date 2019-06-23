@@ -30,6 +30,8 @@ public:
 
     Progress *process() const;
     void setProcess(Progress *process);
+
+    bool isExist = true;
 private:
     Character *mPlayer;
     Progress *mProcess;

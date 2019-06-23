@@ -11,6 +11,9 @@ Scene{
     visible: opacity>0
 
     signal backPressed
+    property alias name:name.text
+
+    property string password
 
     Rectangle {
         id: mainRec
@@ -73,7 +76,6 @@ Scene{
         }
 
         Rectangle{
-            id:check
             width: dp(80)
             height: dp(25)
             border.color: "black"
@@ -87,10 +89,10 @@ Scene{
                 font.pixelSize: sp(10)
             }
             MouseArea{
+                id:area
                 anchors.fill: parent
                 onClicked: {
                     check_success.visible=true
-                    //changeInfoPage.allInfoPage.visible=true
                 }
             }
 
@@ -109,7 +111,7 @@ Scene{
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            text: "Your password : " + "123456"
+            text: "Your password : " + password
             font.pixelSize: sp(14)
         }
         MouseArea{

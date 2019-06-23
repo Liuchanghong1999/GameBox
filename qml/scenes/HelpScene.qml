@@ -30,7 +30,7 @@ SceneBase {
             anchors.centerIn: parent
             text: "Help!"
         }
-   }
+    }
 
     Rectangle {
         width: parent.gameWindowAnchorItem.width

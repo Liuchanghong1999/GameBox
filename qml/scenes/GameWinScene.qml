@@ -55,7 +55,7 @@ Scene {
                     nextLevelPressed()
                 }
             }
-       }
+        }
 
         Rectangle {
             width: 140
@@ -78,7 +78,7 @@ Scene {
                 anchors.fill: parent
                 onClicked: backPressed()
             }
-       }
+        }
 
-   }
+    }
 }

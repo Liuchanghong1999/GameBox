@@ -16,6 +16,7 @@ bool Game::loadGame()
 
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
+        isExist = false;
         return false;
     }
 
@@ -81,8 +82,16 @@ void Game::print(int indentation) const
 
 void Game::modify()
 {
-    mPlayer->setName("yyp");
-    mProcess->setLevels(5);
+    mPlayer->setName("");
+    mPlayer->setPassword("");
+    mPlayer->setAvatar("/assets/avatar.png");
+    mPlayer->setSex("女");
+    mPlayer->setBirthdayYear("2000");
+    mPlayer->setHometown("China");
+    mPlayer->setConstellation("Aries");
+    mProcess->setCoins(0);
+    mProcess->setLives(0);
+    mProcess->setLevels(1);
 }
 
 Character *Game::player() const

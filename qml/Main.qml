@@ -28,9 +28,11 @@
 
 import Felgo 3.0
 import QtQuick 2.0
+import Mario 1.0
 import "scenes"
 import "common"
 import "userPage"
+
 
 GameWindow {
     id: gameWindow
@@ -40,9 +42,29 @@ GameWindow {
     screenWidth: 960
     screenHeight: 640
 
+    Game{
+        id:game
+    }
+
+
+    Component.onCompleted: {
+        game.loadGame()
+        selectLevelScene.initFlag(game.process.levels)
+        shopScene.mycoins=game.process.coins
+        gameScene.player.life=game.process.lives
+    }
+
     Login{
         id:loginScene
-        onLoginButtonPressed:gameWindow.state="mainScene"
+        onLoginButtonPressed:{
+            if((name_txt.text!==game.player.name || password_txt.text!==game.player.password)
+                    || (name_txt.text==="" || password_txt.text===""))
+            {
+                warning.visible=true
+                warning_timer.running=true
+            }
+            else gameWindow.state="mainScene"
+        }
         onRegisterButtonPressed: gameWindow.state="registerScene"
         onForgetPasswordPressed: gameWindow.state="forgetPassword"
     }
@@ -51,6 +73,9 @@ GameWindow {
         id:registerScene
         setPassword.onAccepted: {
             gameWindow.state="login"
+            game.player.name=name.text
+            game.player.password=password.text
+            game.saveGame()
             name.clear()
             password.clear()
         }
@@ -60,13 +85,17 @@ GameWindow {
     ForgetPassword{
         id:forgetPassword
         onBackPressed: gameWindow.state="login"
-
+        //password: game.player.password
     }
 
     MainPage{
         id:mainScene
         onEnterGame: gameWindow.state="menu"
-        onExit: gameWindow.state="login"
+        onExit: {
+            gameWindow.state="login"
+
+            game.saveGame()
+        }
     }
 
     property int coins:0
@@ -83,45 +112,52 @@ GameWindow {
             gameWindow.state = "help"
         }
         onShopPressed: gameWindow.state="shopScene"
-        onExit: gameWindow.state="mainScene"
+        onExit: {
+            gameWindow.state="mainScene"
+            game.saveGame()
+        }
     }
 
     SelectLevelScene {
-      id: selectLevelScene
-
-      onLevelPressed: {
-        gameScene.setLevel(selectedLevel)
-        gameScene.resetLevel()
-        gameScene.visible=true
-        gameWindow.state = "game"
-      }
-      onBackPressed:   gameWindow.state = "menu"
+        id: selectLevelScene
+        onLevelPressed: {
+            gameScene.setLevel(selectedLevel)
+            gameScene.resetLevel()
+            gameScene.visible=true
+            gameWindow.state = "game"
+        }
+        onBackPressed:   gameWindow.state = "menu"
     }
 
     GameScene {
-      id: gameScene
-      visible: false
-      onExitLevelPressed: {
-          gameWindow.state="selectLevel"
-          gameScene.stopLevel()
-      }
+        id: gameScene
+        visible: false
+        onExitLevelPressed: {
+            gameWindow.state="selectLevel"
+            gameScene.stopLevel()
+        }
 
-      onPlayer_died: {
-          gameScene.stopLevel()
-          gameWindow.state="gameover"
-      }
+        onPlayer_died: {
+            gameScene.stopLevel()
+            gameWindow.state="gameover"
+            game.process.lives=player.life
+            game.saveGame()
+        }
 
-      onGame_win: {
-          gameWindow.state="gamewin";
-          if(selectLevelScene.flag==selectLevelScene.activeLevel){
-              selectLevelScene.flag+=1
-          }
-      }
+        onGame_win: {
+            gameWindow.state="gamewin";
+            if(selectLevelScene.flag==selectLevelScene.activeLevel){
+                selectLevelScene.flag+=1
+                game.process.levels=selectLevelScene.flag
+                game.saveGame()
+            }
+        }
 
-      onHandCoin: {
+        onHandCoin: {
             coins=gameScene.player.score
             shopScene.addCoins(coins)
-      }
+            game.process.coins=shopScene.mycoins
+        }
     }
 
 
@@ -134,9 +170,10 @@ GameWindow {
         id:shopScene
         player_life: gameScene.player.life
         onBuy_success: {
-//            coins=coins-price
-//            mycoins=corns
+            game.process.coins=mycoins
             gameScene.player.life++
+            game.process.lives=gameScene.player.life
+            game.saveGame()
         }
         onBackPressed: {
             gameWindow.state="menu"
@@ -200,10 +237,10 @@ GameWindow {
             PropertyChanges {target: gameWindow; activeScene: menuScene}
         },
         State {
-          name: "selectLevel"
-          PropertyChanges {target: selectLevelScene; opacity: 1}
-          PropertyChanges {target: gameWindow; activeScene: selectLevelScene}
-          PropertyChanges {target: gameScene; visible:false}
+            name: "selectLevel"
+            PropertyChanges {target: selectLevelScene; opacity: 1}
+            PropertyChanges {target: gameWindow; activeScene: selectLevelScene}
+            PropertyChanges {target: gameScene; visible:false}
         },
         State {
             name: "help"
@@ -211,10 +248,10 @@ GameWindow {
             PropertyChanges {target: gameWindow; activeScene: helpScene}
         },
         State {
-          name: "game"
-          PropertyChanges {target: gameScene; opacity: 1}
-          PropertyChanges {target: gameScene; visible:true}
-          PropertyChanges {target: gameWindow; activeScene: gameScene}
+            name: "game"
+            PropertyChanges {target: gameScene; opacity: 1}
+            PropertyChanges {target: gameScene; visible:true}
+            PropertyChanges {target: gameWindow; activeScene: gameScene}
         },
         State{
             name:"gameover"

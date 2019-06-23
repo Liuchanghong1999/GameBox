@@ -49,8 +49,8 @@ Scene{
                 anchors.centerIn: parent
                 buttonText.color: "lightgreen"
                 buttonText.font.pixelSize: 20
-          }
-          MouseArea{
+            }
+            MouseArea{
                 anchors.fill: parent
                 onClicked: {
                     onceAgain()
@@ -75,7 +75,7 @@ Scene{
                 anchors.centerIn: parent
                 buttonText.color: "lightgreen"
                 buttonText.font.pixelSize: 20
-          }
+            }
             MouseArea{
                 anchors.fill: parent
                 onClicked: {

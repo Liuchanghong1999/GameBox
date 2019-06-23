@@ -12,8 +12,8 @@ SceneBase {
     signal levelPressed(string selectedLevel)
 
     property int activeLevel:1
-    //property int flag:1
-    property int flag : 8
+    property int flag:1
+    //property int flag : 8
     // background
     Rectangle {
         id: background
@@ -50,67 +50,67 @@ SceneBase {
 
     // show selectable levels
     Grid {
-      id:grid
-      anchors.centerIn: parent
-      spacing: 10
-      columns: 4
-      rows:2
+        id:grid
+        anchors.centerIn: parent
+        spacing: 10
+        columns: 4
+        rows:2
 
-      // repeater adds 10 levels to grid
-      Repeater {
-        id:repeater
-        model: 8
-        delegate:
-        Rectangle { // delegate describes the structure for each level item
-            width: 52
-            height: 52
-            radius: 12
-            color: "lightgreen"
-
-            Rectangle {
-                width: 44
-                height: 44
-                anchors.centerIn: parent
-                radius: 11
-                color: "transparent"
+        // repeater adds 10 levels to grid
+        Repeater {
+            id:repeater
+            model: 8
+            delegate:
+                Rectangle { // delegate describes the structure for each level item
+                width: 52
+                height: 52
+                radius: 12
+                color: "lightgreen"
 
                 Rectangle {
-                width: 40
-                height: 40
-                anchors.centerIn: parent
-                radius: 10
-                color: "green"
-
-
-                MenuButton {
-                    property int level: index + 1 // index holds values from 0 to 9 (we set our repeater model to 10)
-
-                    text: level
-                    width: 36
-                    height: 36
+                    width: 44
+                    height: 44
                     anchors.centerIn: parent
-                    buttonText.color:  flag<level? "white": "lightgreen"
-                    buttonText.font.family: standardFont.name
-                    buttonText.font.pixelSize: 24
-                    onClicked: {
-                        activeLevel=level
-                        if(flag<activeLevel){
-                            warning.visible=true
-                            timer1.running=true
-                            console.log("falg++++++"+flag)
-                        }
-                        else{
-                            var levelFile = "Level_"+level+".qml";
-                            if(level < 10)
-                                levelFile = "Level_0"+level+".qml";
-                            levelPressed(levelFile) // e.g. Level_01.qml, Level_02.qml, ... Level_10.qml
+                    radius: 11
+                    color: "transparent"
+
+                    Rectangle {
+                        width: 40
+                        height: 40
+                        anchors.centerIn: parent
+                        radius: 10
+                        color: "green"
+
+
+                        MenuButton {
+                            property int level: index + 1 // index holds values from 0 to 9 (we set our repeater model to 10)
+
+                            text: level
+                            width: 36
+                            height: 36
+                            anchors.centerIn: parent
+                            buttonText.color:  flag<level? "white": "lightgreen"
+                            buttonText.font.family: standardFont.name
+                            buttonText.font.pixelSize: 24
+                            onClicked: {
+                                activeLevel=level
+                                if(flag<activeLevel){
+                                    warning.visible=true
+                                    timer1.running=true
+                                    console.log("falg++++++"+flag)
+                                }
+                                else{
+                                    var levelFile = "Level_"+level+".qml";
+                                    if(level < 10)
+                                        levelFile = "Level_0"+level+".qml";
+                                    levelPressed(levelFile) // e.g. Level_01.qml, Level_02.qml, ... Level_10.qml
+                                }
+                            }
                         }
                     }
                 }
-             }
-          }
+            }
         }
-      }
     }
 
     Rectangle{
@@ -133,4 +133,7 @@ SceneBase {
         onTriggered: warning.visible=false
     }
 
+    function initFlag(num){
+        flag=num
+    }
 }

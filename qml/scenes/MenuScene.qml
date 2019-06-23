@@ -11,7 +11,7 @@ SceneBase {
     opacity: 0
     visible: opacity>0
 
-  signal selectLevelPressed
+    signal selectLevelPressed
     signal helpScenePressed
     signal shopPressed
     signal exit
@@ -75,7 +75,7 @@ SceneBase {
         borderColor: "transparent"
 
         onClicked: {
-              onClicked: selectLevelPressed()
+            onClicked: selectLevelPressed()
         }
     }
 
@@ -119,7 +119,7 @@ SceneBase {
         borderColor: "transparent"
 
         onClicked: {
-              onClicked: shopPressed()
+            onClicked: shopPressed()
         }
     }
 
@@ -164,18 +164,18 @@ SceneBase {
             text: "退出游戏"
             font.pixelSize: sp(14)
         }
-       MouseArea{
-           anchors.fill: parent
-           hoverEnabled: true
-           onEntered: {
-               cursorShape=Qt.OpenHandCursor
-               parent.opacity=0.8
-           }
-           onExited: {
-               parent.opacity=1.0
-           }
-           onClicked: exit()
-       }
+        MouseArea{
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: {
+                cursorShape=Qt.OpenHandCursor
+                parent.opacity=0.8
+            }
+            onExited: {
+                parent.opacity=1.0
+            }
+            onClicked: exit()
+        }
     }
 
 }

@@ -52,6 +52,7 @@ Scene{
             anchors.topMargin: 100
             placeholderText:"set name"
             font.pixelSize: sp(15)
+            property bool isnull:name.text.length==0
             property bool isTooLong: name.text.length >= 8
         }
 
@@ -59,8 +60,8 @@ Scene{
             anchors.left: name.right
             anchors.top: name.top
             anchors.topMargin: 11
-            text: "*名字长度不能超过8位"
-            color: name.isTooLong ? "red" : "black"
+            text: "*名字不能为空且不超过8位"
+            color: name.isTooLong || name.isnull? "red" : "black"
             font.pixelSize: 11
         }
 
@@ -74,6 +75,7 @@ Scene{
             anchors.topMargin: 130
             placeholderText:"set password"
             font.pixelSize: sp(15)
+            property bool isnull:password.text.length==0
             property bool isTooLong: password.text.length >= 8
         }
 
@@ -82,15 +84,15 @@ Scene{
             anchors.left: password.right
             anchors.top: password.top
             anchors.topMargin: 11
-            text: "*密码长度不能超过8位"
-            color: password.isTooLong ?"red":"black"
+            text: "*密码不能为空且不超过8位"
+            color: password.isTooLong || password.isnull ?"red":"black"
             font.pixelSize: 11
         }
 
 
         Button{
             id:complete
-            visible: !name.isTooLong && !password.isTooLong
+            visible: !name.isTooLong && !password.isTooLong && !name.isnull && !password.isnull
             text: "完成注册"
             font.pixelSize: sp(14)
             //font.pointSize: 8

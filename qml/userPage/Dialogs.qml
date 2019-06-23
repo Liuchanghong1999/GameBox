@@ -12,12 +12,12 @@ Item {
     property alias saveInfoDialog: saveInfoDialog
     property alias savePasswordDialog: savePasswordDialog
     property alias fileOpenDialog: fileOpen
-//    property alias selectPicsDialog: selectPicsDialog
+    //    property alias selectPicsDialog: selectPicsDialog
 
     function opensaveInfoDialog() { saveInfoDialog.open() }
     function opensavePasswordDialog() {savePasswordDialog.open()}
     function openFileDialog() { fileOpen.open(); }
-//    function openselectPicsDialog() {selectPicsDialog.open();}
+    //    function openselectPicsDialog() {selectPicsDialog.open();}
 
 
     QQD.FileDialog {
@@ -61,42 +61,42 @@ Item {
         standardButtons: Dialog.Ok | Dialog.Cancel
     }
 
-//    QQD.Dialog{
-//        id:selectPicsDialog
-//        contentItem: Rectangle{
-//            color:"lightskyblue"
-//            implicitWidth:dp(150)
-//            implicitHeight: dp(60)
+    //    QQD.Dialog{
+    //        id:selectPicsDialog
+    //        contentItem: Rectangle{
+    //            color:"lightskyblue"
+    //            implicitWidth:dp(150)
+    //            implicitHeight: dp(60)
 
-//            Button{
-//                id:cameraBtn
-//                anchors.verticalCenter: parent.verticalCenter
-//                anchors.left: parent.left
-//                anchors.leftMargin: dp(10)
-//                text: "相机"
-//                onClicked: {
-//                    onClicked: nativeUtils.displayCameraPicker("Take Photo")
-//                }
+    //            Button{
+    //                id:cameraBtn
+    //                anchors.verticalCenter: parent.verticalCenter
+    //                anchors.left: parent.left
+    //                anchors.leftMargin: dp(10)
+    //                text: "相机"
+    //                onClicked: {
+    //                    onClicked: nativeUtils.displayCameraPicker("Take Photo")
+    //                }
 
-//                Connections {
-//                  target: nativeUtils
-//                  onCameraPickerFinished: {
-//                    avatar.source = ""
-//                    if(accepted) {
-//                      avatar.source = path
-//                    }
-//                  }
-//                }
+    //                Connections {
+    //                  target: nativeUtils
+    //                  onCameraPickerFinished: {
+    //                    avatar.source = ""
+    //                    if(accepted) {
+    //                      avatar.source = path
+    //                    }
+    //                  }
+    //                }
 
-//            Button{
-//                id:filesBtn
-//                anchors.verticalCenter: parent.verticalCenter
-//                anchors.right: parent.right
-//                anchors.rightMargin: dp(10)
-//                text: "文件"
+    //            Button{
+    //                id:filesBtn
+    //                anchors.verticalCenter: parent.verticalCenter
+    //                anchors.right: parent.right
+    //                anchors.rightMargin: dp(10)
+    //                text: "文件"
 
-//            }
-//        }
-//    }
+    //            }
+    //        }
+    //    }
 }
 

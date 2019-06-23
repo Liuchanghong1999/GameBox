@@ -4,8 +4,8 @@ import "../entities"
 import "." as Levels
 
 Levels.LevelBase {
-  id: level
-  width: 42 * gameScene.gridSize
+    id: level
+    width: 42 * gameScene.gridSize
 
 
     Repeater{
@@ -36,7 +36,7 @@ Levels.LevelBase {
         row:11
         column: 4
         size: 1
-     }
+    }
 
 
     Repeater{
@@ -52,7 +52,7 @@ Levels.LevelBase {
         row:15
         column: 4
         size: 1
-     }
+    }
 
     Repeater{
         model: 4
@@ -67,7 +67,7 @@ Levels.LevelBase {
         row:19
         column: 4
         size: 1
-     }
+    }
 
     Repeater{
         model: 4
@@ -82,7 +82,7 @@ Levels.LevelBase {
         row:23
         column: 4
         size: 1
-     }
+    }
 
     Repeater{
         model: 4
@@ -97,7 +97,7 @@ Levels.LevelBase {
         row:27
         column: 4
         size: 1
-     }
+    }
 
     Repeater{
         model: 4
@@ -112,7 +112,7 @@ Levels.LevelBase {
         row:31
         column: 4
         size: 1
-     }
+    }
 
     Repeater{
         model: 5
@@ -143,7 +143,7 @@ Levels.LevelBase {
         row:39
         column: 2
         size: 1
-     }
+    }
 
     Repeater{
         model: 4
@@ -158,7 +158,7 @@ Levels.LevelBase {
         row:43
         column: 4
         size: 1
-     }
+    }
 
     Repeater{
         model: 2
@@ -173,7 +173,7 @@ Levels.LevelBase {
         row:47
         column: 2
         size: 1
-     }
+    }
 
     Repeater{
         model: 4
@@ -188,7 +188,7 @@ Levels.LevelBase {
         row:50
         column: 4
         size: 1
-     }
+    }
 
     Coin{
         x: gameScene.gridSize*11

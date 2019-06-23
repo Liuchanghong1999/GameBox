@@ -6,129 +6,129 @@ import Felgo 3.0
 
 
 Opponent {
-  id: opponentJumper
-  variationType: "jumper"
+    id: opponentJumper
+    variationType: "jumper"
 
-  // this property determines in which the opponent will jump next
-  // (-1 = left, 1 = right)
-  property int direction: -1
+    // this property determines in which the opponent will jump next
+    // (-1 = left, 1 = right)
+    property int direction: -1
 
-  // the opponents jumpForce in vertical and horizontal
-  // direction
-  property int verticalJumpForce: 510
-  property int horizontalJumpForce: 40
+    // the opponents jumpForce in vertical and horizontal
+    // direction
+    property int verticalJumpForce: 510
+    property int horizontalJumpForce: 40
 
-  // set image
-  // if opponent is alive, use normal sprite,
-  // else, use dead sprite
-  image.source: alive ? "../../assets/opponent/opponent_jumper.png"
-                      : "../../assets/opponent/opponent_jumper_dead.png"
+    // set image
+    // if opponent is alive, use normal sprite,
+    // else, use dead sprite
+    image.source: alive ? "../../assets/opponent/opponent_jumper.png"
+                        : "../../assets/opponent/opponent_jumper_dead.png"
 
-  // define colliderComponent for collision detection while dragging
-  colliderComponent: collider
+    // define colliderComponent for collision detection while dragging
+    colliderComponent: collider
 
-  // if the opponent dies, stop it's jumpTimer
-  onAliveChanged: {
-    if(!alive) {
-      jumpTimer.stop()
+    // if the opponent dies, stop it's jumpTimer
+    onAliveChanged: {
+        if(!alive) {
+            jumpTimer.stop()
+        }
     }
-  }
 
-  // the opponents main collider
-  PolygonCollider {
-    id: collider
+    // the opponents main collider
+    PolygonCollider {
+        id: collider
 
-    // vertices, forming the shape of the collider
-    vertices: [
-      Qt.point(1, 1),
-      Qt.point(31, 1),
-      Qt.point(31, 30),
-      Qt.point(23, 31),
-      Qt.point(9, 31),
-      Qt.point(1, 30)
-    ]
+        // vertices, forming the shape of the collider
+        vertices: [
+            Qt.point(1, 1),
+            Qt.point(31, 1),
+            Qt.point(31, 30),
+            Qt.point(23, 31),
+            Qt.point(9, 31),
+            Qt.point(1, 30)
+        ]
 
-    // the bodyType is dynamic
-    bodyType: Body.Dynamic
+        // the bodyType is dynamic
+        bodyType: Body.Dynamic
 
-    // the collider should not be active in edit mode or
-    // when dead
-    active: !alive ? false : true
+        // the collider should not be active in edit mode or
+        // when dead
+        active: !alive ? false : true
 
-    // Category3: opponent body
-    categories: Box.Category3
+        // Category3: opponent body
+        categories: Box.Category3
 
-    collidesWith: Box.Category1 | Box.Category2 | Box.Category5
+        collidesWith: Box.Category1 | Box.Category2 | Box.Category5
 
-    // to avoid, that the opponent slides on the ground
-    friction: 1
-  }
-
-  // this collider checks for collisions from the bottom and starts
-  // the jumpTimer, on collision
-  BoxCollider {
-    id: bottomSensor
-
-    // set size and position
-    width: 30
-    height: 3
-
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.top: parent.bottom
-
-    // the bodyType is dynamic
-    bodyType: Body.Dynamic
-
-    // only active when the main collider is active
-    active: collider.active
-
-    // Category4: opponent sensor
-    categories: Box.Category4
-    // Category5: solids
-    collidesWith: Box.Category5
-
-    collisionTestingOnlyMode: true
-
-    // this is called whenever the contact with another entity begins
-    fixture.onContactChanged: {
-      var otherEntity = other.getBody().target
-      if(collider.linearVelocity.y === 0 && !jumpTimer.running)
-        jumpTimer.start()
+        // to avoid, that the opponent slides on the ground
+        friction: 1
     }
-  }
 
-  // this timer is started in the bottomSensor and makes the opponent jump
-  // when triggered
-  Timer {
-    id: jumpTimer
+    // this collider checks for collisions from the bottom and starts
+    // the jumpTimer, on collision
+    BoxCollider {
+        id: bottomSensor
 
-    interval: 300
+        // set size and position
+        width: 30
+        height: 3
 
-    onTriggered: {
-      // jump in the current direction
-      collider.applyLinearImpulse(Qt.point(direction * horizontalJumpForce, -verticalJumpForce))
-      // alternate direction after every jump
-      direction *= -1
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.bottom
+
+        // the bodyType is dynamic
+        bodyType: Body.Dynamic
+
+        // only active when the main collider is active
+        active: collider.active
+
+        // Category4: opponent sensor
+        categories: Box.Category4
+        // Category5: solids
+        collidesWith: Box.Category5
+
+        collisionTestingOnlyMode: true
+
+        // this is called whenever the contact with another entity begins
+        fixture.onContactChanged: {
+            var otherEntity = other.getBody().target
+            if(collider.linearVelocity.y === 0 && !jumpTimer.running)
+                jumpTimer.start()
+        }
     }
-  }
+
+    // this timer is started in the bottomSensor and makes the opponent jump
+    // when triggered
+    Timer {
+        id: jumpTimer
+
+        interval: 300
+
+        onTriggered: {
+            // jump in the current direction
+            collider.applyLinearImpulse(Qt.point(direction * horizontalJumpForce, -verticalJumpForce))
+            // alternate direction after every jump
+            direction *= -1
+        }
+    }
 
 
-  // reset the opponent
-  function reset() {
-    // We set alive to false here, and reset it to true later,
-    // to deactivate the collider while the opponent is reset.
-    alive = false
+    // reset the opponent
+    function reset() {
+        // We set alive to false here, and reset it to true later,
+        // to deactivate the collider while the opponent is reset.
+        alive = false
 
-    // this is the reset function of the base entity Opponent.qml
-    reset_super()
+        // this is the reset function of the base entity Opponent.qml
+        reset_super()
 
-    // reset direction
-    direction = -1
+        // reset direction
+        direction = -1
 
-    // reset timer
-    if(jumpTimer.running)
-      jumpTimer.stop()
+        // reset timer
+        if(jumpTimer.running)
+            jumpTimer.stop()
 
-    alive = true
-  }
+        alive = true
+    }
 }

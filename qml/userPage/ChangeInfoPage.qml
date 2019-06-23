@@ -146,8 +146,8 @@ Rectangle {
             height: dp(15)
             width: dp(60)
             model:["1990", "1991","1992","1993","1994","1995","1996","1997",
-                    "1998","1999","2000","2001","2002","2003","2004","2005",
-                    "2006","2007","2008","2009","2010"]
+                "1998","1999","2000","2001","2002","2003","2004","2005",
+                "2006","2007","2008","2009","2010"]
             font.pixelSize: sp(10)
         }
         AppText{
@@ -164,7 +164,7 @@ Rectangle {
             height: dp(15)
             width: dp(80)
             model: ["China","Singapore","Japan","America","England"]
-           font.pixelSize: sp(10)
+            font.pixelSize: sp(10)
         }
         AppText {
             id:constellation
@@ -201,13 +201,13 @@ Rectangle {
             height: width/2
             color: "#ffffff"
             TextArea {
-                       id: textArea
-                       text: qsTr("Text Area")
-                       font.pixelSize: sp(10)
-                       font.wordSpacing: 0
-                       font.weight: Font.Normal
-                       anchors.fill: parent
-                       wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                id: textArea
+                text: qsTr("Text Area")
+                font.pixelSize: sp(10)
+                font.wordSpacing: 0
+                font.weight: Font.Normal
+                anchors.fill: parent
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
 
@@ -229,19 +229,19 @@ Rectangle {
             mainRec.state="goright"
             allInfo.visible=false
         }
-//        cameraBtn.onClicked: {
-//            onClicked: nativeUtils.displayCameraPicker("Take Photo")
-//        }
+        //        cameraBtn.onClicked: {
+        //            onClicked: nativeUtils.displayCameraPicker("Take Photo")
+        //        }
 
-//        Connections {
-//          target: nativeUtils
-//          onCameraPickerFinished: {
-//            avatar.source = ""
-//            if(accepted) {
-//              avatar.source = path
-//            }
-//          }
-//        }
+        //        Connections {
+        //          target: nativeUtils
+        //          onCameraPickerFinished: {
+        //            avatar.source = ""
+        //            if(accepted) {
+        //              avatar.source = path
+        //            }
+        //          }
+        //        }
 
         fileOpenDialog.onAccepted: {
             avatar.source=fileOpenDialog.fileUrl
