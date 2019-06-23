@@ -46,11 +46,12 @@ Scene{
         TextArea{
             id:name
             width: 120
+            color: "white"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: 100
             placeholderText:"set name"
-            font.pixelSize: sp(18)
+            font.pixelSize: sp(15)
             property bool isTooLong: name.text.length >= 8
         }
 
@@ -67,11 +68,12 @@ Scene{
         TextArea{
             id:password
             width: 120
+            color: "white"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: 130
             placeholderText:"set password"
-            font.pixelSize: sp(18)
+            font.pixelSize: sp(15)
             property bool isTooLong: password.text.length >= 8
         }
 

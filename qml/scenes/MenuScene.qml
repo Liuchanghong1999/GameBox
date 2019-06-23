@@ -1,3 +1,6 @@
+//author:yanyuping
+//date:2018.6.21s
+
 import QtQuick 2.0
 import Felgo 3.0
 import "../common"

@@ -247,7 +247,7 @@ Levels.LevelBase {
     }
 
     Repeater{
-        model:10
+        model:14
         Coin{
             x: gameScene.gridSize*27  + (2*index-2) * gameScene.gridSize
             y: level.height- (8 +1)*gameScene.gridSize

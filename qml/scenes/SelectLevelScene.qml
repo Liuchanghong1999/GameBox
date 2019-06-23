@@ -12,7 +12,8 @@ SceneBase {
     signal levelPressed(string selectedLevel)
 
     property int activeLevel:1
-    property int flag:1
+    //property int flag:1
+    property int flag : 8
     // background
     Rectangle {
         id: background
@@ -116,9 +117,8 @@ SceneBase {
         id:warning
         visible: false
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        color: "yellow"
-        opacity: 0.4
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: dp(60)
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter

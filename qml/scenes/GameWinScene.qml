@@ -31,12 +31,37 @@ Scene {
             text: "Congratulations!"
         }
 
+        Rectangle {
+            width: 100
+            height: 25
+            anchors.top:txt.bottom
+            anchors.topMargin: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+            radius: 10
+            color: "green"
+
+            MenuButton {
+                text: "下一关"
+                width: 36
+                height: 36
+                anchors.centerIn: parent
+                buttonText.color: "lightgreen"
+                buttonText.font.pixelSize: 20
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    console.log("hahahahah")
+                    nextLevelPressed()
+                }
+            }
+       }
 
         Rectangle {
             width: 140
-            height: 40
+            height: 25
             anchors.top:txt.bottom
-            anchors.topMargin: 20
+            anchors.topMargin: 70
             anchors.horizontalCenter: parent.horizontalCenter
             radius: 10
             color: "green"
@@ -54,5 +79,6 @@ Scene {
                 onClicked: backPressed()
             }
        }
+
    }
 }

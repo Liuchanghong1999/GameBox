@@ -15,7 +15,7 @@ EntityBase {
   property alias collider: collider
   property alias horizontalVelocity: collider.linearVelocity.x
   property int score: 0
-    property int starInvincibilityTime: 4000
+  property int starInvincibilityTime: 4000
   property bool invincible: false
   property int life:0
 
@@ -36,7 +36,7 @@ EntityBase {
   BoxCollider {
     id: collider
     height: parent.height
-    width: 30
+    width: 20
     anchors.horizontalCenter: parent.horizontalCenter
     // this collider must be dynamic because we are moving it by applying forces and impulses
     bodyType: Body.Dynamic // this is the default value but I wanted to mention it ;)
@@ -91,7 +91,7 @@ EntityBase {
     id: feetSensor
 
     // set and adjust size, depending on player size (big or small)
-    width: 32 * parent.scale
+    width: 20 * parent.scale
     height: 10 * parent.scale
 
     // set position

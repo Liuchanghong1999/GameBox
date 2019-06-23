@@ -54,7 +54,7 @@ Scene {
 
   // ... followed by 2 parallax layers with trees and grass
   ParallaxScrollingBackground {
-    sourceImage: "../assets/background/111.png"
+    sourceImage: "../../assets/background/layer3.png"
     anchors.bottom: gameScene.gameWindowAnchorItem.bottom
     anchors.horizontalCenter: gameScene.gameWindowAnchorItem.horizontalCenter
     // we move the parallax layers at the same speed as the player
@@ -317,8 +317,7 @@ Scene {
     var opponents = entityManager.getEntityArrayByType("opponent")
     for(var opp in opponents) {
       opponents[opp].reset()
-    }
-
+    }   
     // reset coins
     var coins = entityManager.getEntityArrayByType("coin")
     for(var coin in coins) {

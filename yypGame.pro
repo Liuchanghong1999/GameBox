@@ -38,8 +38,15 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    progress.cpp \
+    game.cpp \
+    character.cpp
 
+HEADERS += \
+    progress.h \
+    game.h \
+    character.h
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -99,4 +106,5 @@ DISTFILES += \
     qml/entities/AttackPlant.qml \
     qml/entities/Apple.qml \
     qml/common/AudioManager.qml \
-    qml/common/MenuButton.qml
+    qml/common/MenuButton.qml \
+    qml/userPage/ForgetPassword.qml

@@ -9,21 +9,21 @@ import QtQuick.Controls 2.5
 Scene{
     opacity: 0
     visible: opacity>0
-    property alias forgetPassword: forgetPassword
 
     signal loginButtonPressed
     signal registerButtonPressed
+    signal forgetPasswordPressed
 
 
     Rectangle {
         id: mainRec
-        color: "white"
+        color: "lightblue"
         anchors.fill: parent.gameWindowAnchorItem
 
-        Image {
-            id: logo
-            source: "images/qt-logo.png"
-        }
+//        Image {
+//            id: logo
+//            source: "images/qt-logo.png"
+//        }
 
         Rectangle{
             id: middleRect
@@ -90,6 +90,18 @@ Scene{
                     anchors.top: middleRect.bottom
                     anchors.topMargin: dp(100)
                     scale: 0.7
+                    MouseArea{
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onEntered: {
+                            cursorShape=Qt.OpenHandCursor
+                            parent.opacity=0.2
+                        }
+                        onExited: {
+                            parent.opacity=1.0
+                        }
+                        onClicked: forgetPasswordPressed()
+                    }
                 }
 
 //        //登录 注册 忘记密码

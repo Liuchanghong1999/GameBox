@@ -1,5 +1,5 @@
-////author:yanyuping
-////date:2018.6.20
+//author:yanyuping
+//date:2018.6.20
 
 //import Felgo 3.0
 //import QtQuick 2.0
@@ -23,6 +23,9 @@
 //}
 
 
+//author:yanyuping
+//date:2018.6.20
+
 import Felgo 3.0
 import QtQuick 2.0
 import "scenes"
@@ -41,6 +44,7 @@ GameWindow {
         id:loginScene
         onLoginButtonPressed:gameWindow.state="mainScene"
         onRegisterButtonPressed: gameWindow.state="registerScene"
+        onForgetPasswordPressed: gameWindow.state="forgetPassword"
     }
 
     Register{
@@ -53,32 +57,19 @@ GameWindow {
         onBackPressed: gameWindow.state="login"
     }
 
+    ForgetPassword{
+        id:forgetPassword
+        onBackPressed: gameWindow.state="login"
+
+    }
 
     MainPage{
         id:mainScene
         onEnterGame: gameWindow.state="menu"
         onExit: gameWindow.state="login"
     }
-    //        cameraBtn.onClicked: {
-    //            onClicked: nativeUtils.displayCameraPicker("Take Photo")
-    //        }
-
-    //        Connections {
-    //          target: nativeUtils
-    //          onCameraPickerFinished: {
-    //            avatar.source = ""
-    //            if(accepted) {
-    //              avatar.source = path
-    //            }
-    //          }
-    //        }
 
     property int coins:0
-
-    // update background music when scene changes
-//    onActiveSceneChanged: {
-//        audioManager.handleMusic()
-//    }
 
     AudioManager {
         id: audioManager
@@ -123,7 +114,6 @@ GameWindow {
       onGame_win: {
           gameWindow.state="gamewin";
           if(selectLevelScene.flag==selectLevelScene.activeLevel){
-              console.log("哈哈哈哈哈哈哈哈哈哈"+selectLevelScene.flag+ "hahahah"+selectLevelScene.activeLevel)
               selectLevelScene.flag+=1
           }
       }
@@ -165,7 +155,17 @@ GameWindow {
     GameWinScene{
         id:gameWinScene
         onBackPressed: gameWindow.state="selectLevel";
+        onNextLevelPressed: {
 
+            var nextLevel=selectLevelScene.activeLevel+1
+            var levelFile
+            if(nextLevel < 10) levelFile = "Level_0"+nextLevel+".qml";
+            else levelFile = "Level_"+nextLevel+".qml";
+            gameScene.setLevel(levelFile)
+            gameScene.resetLevel()
+            gameScene.visible=true
+            gameWindow.state = "game"
+        }
     }
 
     // states
@@ -189,7 +189,11 @@ GameWindow {
             PropertyChanges { target: mainScene; opacity:1}
             PropertyChanges {target: gameWindow; activeScene: mainScene}
         },
-
+        State {
+            name: "forgetPassword"
+            PropertyChanges {target: forgetPassword; opacity:1}
+            PropertyChanges {target: gameWindow; activeScene: forgetPassword}
+        },
         State {
             name: "menu"
             PropertyChanges {target: menuScene; opacity: 1}

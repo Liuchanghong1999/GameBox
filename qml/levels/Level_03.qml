@@ -28,6 +28,14 @@ Levels.LevelBase {
       size:6
   }
 
+  Repeater{
+      model:6
+      Coin{
+          x:( 8 +index) * gameScene.gridSize
+          y: level.height- (5+1)*gameScene.gridSize
+      }
+  }
+
   OpponentWalker{
       x: gameScene.gridSize *  8
       y: level.height - ( 3 +1)* gameScene.gridSize
@@ -41,16 +49,29 @@ Levels.LevelBase {
       farthest: gameScene.gridSize * 4
   }
 
+  Thorn{
+      row: 24
+      column:3
+      size:2
+      direction: 1
+  }
+
   Platform{
       row:24
       column: 2
       size: 6
   }
 
-//  OpponentWalker{
-//      x: gameScene.gridSize *  24
-//      y: level.height - ( 3 +1)* gameScene.gridSize
-//  }
+  Repeater{
+      model:4
+      Coin{
+          x:( 25 +index-1) * gameScene.gridSize
+          y: level.height- (6+1)*gameScene.gridSize
+      }
+  }
+
+
+
 
 //  OpponentWalker{
 //      x: gameScene.gridSize *  29
@@ -65,6 +86,11 @@ Levels.LevelBase {
       farthest: gameScene.gridSize * 4
   }
 
+  OpponentWalker{
+      x: gameScene.gridSize *  30
+      y: level.height - (5+1)* gameScene.gridSize
+  }
+
   Platform{
       row:37
       column: 2
@@ -74,6 +100,10 @@ Levels.LevelBase {
   Opponentjumper{
       x: gameScene.gridSize * 42
       y: level.height - ( 7 +1)* gameScene.gridSize
+  }
+
+  Coin{
+
   }
 
   Ground{
