@@ -10,24 +10,30 @@ Scene{
     opacity: 0
     visible: opacity>0
 
-    signal loginButtonPressed
-    signal registerButtonPressed
-    signal forgetPasswordPressed
+    signal loginButtonPressed  //登录按钮
+    signal registerButtonPressed   //注册按钮
+    signal forgetPasswordPressed  //忘记密码
 
-    property alias name_txt : name_txt
-    property alias password_txt : password_txt
-    property alias warning_timer : warning_timer
-    property alias warning : warning
+    property alias name_txt : name_txt  //输入的名字
+    property alias password_txt : password_txt   //输入的密码
+    property alias warning_timer : warning_timer  //将warning的visible设置为false的定时器
+    property alias warning : warning    //提示名字或密码错误
 
     Rectangle {
         id: mainRec
         color: "lightblue"
         anchors.fill: parent.gameWindowAnchorItem
 
-        //        Image {
-        //            id: logo
-        //            source: "images/qt-logo.png"
-        //        }
+                Image {
+                    id: logo
+                    scale: 0.8
+                    height: dp(142)
+                    width: dp(450)
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: dp(10)
+                    source: "../../assets/ui/gamebox.png"
+                }
 
         Rectangle{
             id: middleRect
@@ -139,8 +145,8 @@ Scene{
         visible: false
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        width: 110
-        height: 30
+        width: 200
+        height: 44
         color: "yellow"
         opacity: 0.4
         Text {

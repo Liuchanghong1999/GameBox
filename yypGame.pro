@@ -102,7 +102,10 @@ DISTFILES += \
     qml/entities/Apple.qml \
     qml/common/AudioManager.qml \
     qml/common/MenuButton.qml \
-    qml/userPage/ForgetPassword.qml
+    qml/userPage/ForgetPassword.qml \
+    qml/entities/VoidBug.qml \
+    qml/levels/Level_04.qml \
+    qml/entities/PlatformerEntityBaseDraggable.qml
 
 HEADERS += \
     progress.h \

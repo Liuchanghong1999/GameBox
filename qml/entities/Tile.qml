@@ -13,7 +13,6 @@ Item {
 
     MultiResolutionImage {
         id: sprite
-        // the anchoring is needed because the start and end tile are actually bigger than the gridSize, because they have some grass hanging from the edge, which we will (for the sake of simplicity) ignore when it comes to collision detection
         anchors.left: pos == "right" ? parent.left : undefined
         anchors.right: pos == "left" ? parent.right : undefined
         anchors.top: pos=="top" ? parent.top : undefined

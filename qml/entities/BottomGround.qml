@@ -9,14 +9,12 @@ TiledEntityBase {
     id: ground
     entityType: "bottom_ground"
 
-    size: 2 // must be >= 2, because we got a sprite for the start, one for the end and a repeatable center sprite
-
+    size: 2
     Row {
         id: tileRow
         Repeater {
             model: size
             Tile {
-                //pos: "mid_pos"
                 image: "../../assets/ground/bottom.png"
             }
         }

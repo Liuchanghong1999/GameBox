@@ -11,8 +11,7 @@ TiledEntityBase {
     property int direction: 1
     property int farthest : gameScene.gridSize
     property int starting: row*gameScene.gridSize
-    // the opponents jumpForce in vertical and horizontal
-    // direction
+
     size: 1
 
     Row {

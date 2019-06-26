@@ -8,8 +8,7 @@ TiledEntityBase {
     id: thorn
     entityType: "thorn"
     y: level.height - (column+1)*22
-    size: 1 // must be >= 2, because we got a sprite for the start, one for the end and a repeatable center sprite
-
+    size: 1
     //1 is up, -1 is down
     property int direction:1
 
@@ -19,7 +18,6 @@ TiledEntityBase {
             model: size
             Tile {
                 height: 22
-
                 image:  direction==1? "../../assets/lalala/bottom_thorn.png" : "../../assets/lalala/top_thorn.png"
             }
         }

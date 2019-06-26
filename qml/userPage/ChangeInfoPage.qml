@@ -9,6 +9,7 @@ import QtQuick.Dialogs 1.2 as QQD
 import QtGraphicalEffects 1.0
 // import QtMultimedia 5.9
 
+
 Rectangle {
     id:mainRec
     anchors.top: parent.top
@@ -19,6 +20,9 @@ Rectangle {
     color: "transparent"
 
     property alias allInfoPage: allInfo
+    property alias avatar:avatar //头像
+    signal savePressed //保存
+    signal unsavePressed //不保存
 
     Rectangle{
         id:allInfo
@@ -26,7 +30,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         //width: dp(200)
         x:0;y:0
-        color: "grey"
+        color: "steelblue"
         visible: false
         onVisibleChanged: {
             mainRec.state="goleft"
@@ -39,7 +43,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: dp(10)
-            source: "images/avatar.jpg"
+            //source: "../images/avatar.jpg"
             smooth: true
             antialiasing: true
             visible: false
@@ -103,14 +107,13 @@ Rectangle {
         }
         AppTextField{
             id:name_txt
-            width: dp(75)
-            height: dp(25)
+            width: dp(70)
+            height: dp(20)
             anchors.left: avatar.left
             anchors.leftMargin: dp(10)
 
             anchors.top: avatar.bottom
             anchors.topMargin: dp(10)
-            text: "Eudora";
             font.pixelSize: sp(12)
         }
 
@@ -122,15 +125,14 @@ Rectangle {
             text: qsTr("性别")
             font.pixelSize: sp(10)
         }
-        ComboBox {
+        AppTextField {
+            id:sex_txt
             anchors.left: name_txt.left
             y:sex.y
-            scale: 0.8
+            width: dp(70)
+            height: dp(20)
 
-            height: dp(15)
-            width: dp(40)
-            model:["女", "男"]
-            font.pixelSize: sp(6)
+            font.pixelSize: sp(12)
         }
         AppText {
             id:birthyear
@@ -140,15 +142,13 @@ Rectangle {
             text: "出生年"
             font.pixelSize: sp(10)
         }
-        ComboBox {
+        AppTextField {
+            id:birthyear_txt
             anchors.left: name_txt.left
             y:birthyear.y
-            height: dp(15)
-            width: dp(60)
-            model:["1990", "1991","1992","1993","1994","1995","1996","1997",
-                "1998","1999","2000","2001","2002","2003","2004","2005",
-                "2006","2007","2008","2009","2010"]
-            font.pixelSize: sp(10)
+            width: dp(70)
+            height: dp(20)
+            font.pixelSize: sp(12)
         }
         AppText{
             id:hometown
@@ -158,13 +158,13 @@ Rectangle {
             text: qsTr("家乡")
             font.pixelSize: sp(12)
         }
-        ComboBox {
+        AppTextField {
+            id:hometown_txt
             anchors.left: name_txt.left
             y:hometown.y
-            height: dp(15)
-            width: dp(80)
-            model: ["China","Singapore","Japan","America","England"]
-            font.pixelSize: sp(10)
+            width: dp(70)
+            height: dp(20)
+            font.pixelSize: sp(12)
         }
         AppText {
             id:constellation
@@ -174,50 +174,42 @@ Rectangle {
             text: qsTr("星座")
             font.pixelSize: sp(12)
         }
-        ComboBox {
+        AppTextField {
+            id:constellation_txt
             anchors.left: name_txt.left
             y:constellation.y
-            height: dp(15)
-            width: dp(60)
-            model: ["双鱼座"]
-            font.pixelSize: sp(10)
-        }
-        AppText {
-            id:spirit
-            anchors.top: constellation.bottom
-            anchors.topMargin: dp(10)
-            anchors.right: name.right
-            text: qsTr("心情")
+            width: dp(70)
+            height: dp(20)
             font.pixelSize: sp(12)
-        }
-
-        Rectangle {
-            anchors.right: parent.right
-            anchors.rightMargin: dp(5)
-            anchors.left: name_txt.left
-
-            y:spirit.y
-
-            height: width/2
-            color: "#ffffff"
-            TextArea {
-                id: textArea
-                text: qsTr("Text Area")
-                font.pixelSize: sp(10)
-                font.wordSpacing: 0
-                font.weight: Font.Normal
-                anchors.fill: parent
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            }
         }
 
         Button{
             id:saveBtn
+            width: dp(80)
+            height: dp(20)
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
+            anchors.bottom: unsaveBtn.top
+            anchors.bottomMargin: dp(20)
             text: "保存"
             font.pixelSize: sp(10)
-            onClicked: dialogs.saveInfoDialog.open()
+            onClicked: {
+                savePressed()
+                dialogs.saveInfoDialog.open()
+            }
+        }
+
+        Button{
+            id:unsaveBtn
+            width: dp(80)
+            height: dp(20)
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            text: "不保存"
+            font.pixelSize: sp(10)
+            onClicked: {
+                unsavePressed()
+                allInfo.visible=false
+            }
         }
     }
 
@@ -225,23 +217,15 @@ Rectangle {
 
     Dialogs{
         id:dialogs
+        anchors.top:parent.top
+        anchors.topMargin: dp(100)
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width/4
+
         saveInfoDialog.onAccepted: {
             mainRec.state="goright"
             allInfo.visible=false
         }
-        //        cameraBtn.onClicked: {
-        //            onClicked: nativeUtils.displayCameraPicker("Take Photo")
-        //        }
-
-        //        Connections {
-        //          target: nativeUtils
-        //          onCameraPickerFinished: {
-        //            avatar.source = ""
-        //            if(accepted) {
-        //              avatar.source = path
-        //            }
-        //          }
-        //        }
 
         fileOpenDialog.onAccepted: {
             avatar.source=fileOpenDialog.fileUrl
@@ -249,9 +233,25 @@ Rectangle {
 
     }
 
+    function init(game){
+        avatar.source=game.player.avatar
+        sex_txt.text=game.player.sex
+        name_txt.text=game.player.name
+        birthyear_txt.text=game.player.birthdayYear
+        hometown_txt.text=game.player.hometown
+        constellation_txt.text=game.player.constellation
 
+    }
 
+    function saveSetting(game){
+        game.player.avatar=avatar.source
+        game.player.name=name_txt.text
+        game.player.sex=sex_txt.text
+        game.player.birthdayYear=birthyear_txt.text
+        game.player.hometown=hometown_txt.text
+        game.player.constellation=constellation_txt.text
 
+    }
 
     states: [
         State {

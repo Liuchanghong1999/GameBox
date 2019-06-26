@@ -37,11 +37,6 @@ EntityBase{
         bodyType: Body.Static
         collisionTestingOnlyMode: true
 
-
-        //    fixture.onBeginContact:{
-        //      var otherEntity = other.getBody().target
-        //      if(otherEntity.entityType === "player") coin.collect()
-        //    }
     }
 
     // set collected to true

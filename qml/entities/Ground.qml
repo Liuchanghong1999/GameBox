@@ -12,22 +12,12 @@ TiledEntityBase {
 
     Row {
         id: tileRow
-        //    Tile {
-        //      pos: "left_pos"
-        //      image: "../../assets/ground/left.png"
-        //    }
-
         Repeater {
             model: size
             Tile {
-                pos: "mid_pos"
                 image: "../../assets/ground/mid.png"
             }
         }
-        //    Tile {
-        //      pos: "right_pos"
-        //      image: "../../assets/ground/right.png"
-        //    }
     }
 
     BoxCollider {

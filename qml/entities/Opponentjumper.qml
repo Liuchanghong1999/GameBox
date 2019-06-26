@@ -18,11 +18,7 @@ Opponent {
     property int verticalJumpForce: 510
     property int horizontalJumpForce: 40
 
-    // set image
-    // if opponent is alive, use normal sprite,
-    // else, use dead sprite
-    image.source: alive ? "../../assets/opponent/opponent_jumper.png"
-                        : "../../assets/opponent/opponent_jumper_dead.png"
+    image.source: "../../assets/opponent/opponent_jumper.png"
 
     // define colliderComponent for collision detection while dragging
     colliderComponent: collider
@@ -68,18 +64,12 @@ Opponent {
     // the jumpTimer, on collision
     BoxCollider {
         id: bottomSensor
-
-        // set size and position
         width: 30
         height: 3
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
-
-        // the bodyType is dynamic
         bodyType: Body.Dynamic
-
-        // only active when the main collider is active
         active: collider.active
 
         // Category4: opponent sensor
@@ -89,7 +79,6 @@ Opponent {
 
         collisionTestingOnlyMode: true
 
-        // this is called whenever the contact with another entity begins
         fixture.onContactChanged: {
             var otherEntity = other.getBody().target
             if(collider.linearVelocity.y === 0 && !jumpTimer.running)
@@ -115,20 +104,14 @@ Opponent {
 
     // reset the opponent
     function reset() {
-        // We set alive to false here, and reset it to true later,
-        // to deactivate the collider while the opponent is reset.
         alive = false
-
         // this is the reset function of the base entity Opponent.qml
         reset_super()
-
         // reset direction
         direction = -1
-
         // reset timer
         if(jumpTimer.running)
             jumpTimer.stop()
-
         alive = true
     }
 }

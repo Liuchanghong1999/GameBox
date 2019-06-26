@@ -5,7 +5,6 @@ import Felgo 3.0
 import QtQuick 2.0
 import "../entities"
 import "../levels"
-import "../editorElements"
 import "../common"
 
 Scene {
@@ -19,12 +18,12 @@ Scene {
     opacity: 0
     visible: opacity > 0
 
-    signal exitLevelPressed
+    signal exitLevelPressed //退出关卡
 
-    signal player_died
+    signal player_died //玩家死亡
 
-    signal game_win
-    signal handCoin()
+    signal game_win //过关
+    signal handCoin() //在每局过后都会提交金币数 只有通过了一关才会加到总金币数中
 
     property int offsetBeforeScrollingStarts: 240
 
@@ -62,14 +61,6 @@ Scene {
         // the speed then gets multiplied by this ratio to create the parallax effect
         ratio: Qt.point(0.3,0)
     }
-    //  ParallaxScrollingBackground {
-    //    sourceImage: "../assets/background/layer1.png"
-    //    anchors.bottom: gameScene.gameWindowAnchorItem.bottom
-    //    anchors.horizontalCenter: gameScene.gameWindowAnchorItem.horizontalCenter
-    //    movementVelocity: player.x > offsetBeforeScrollingStarts ? Qt.point(-player.horizontalVelocity,0) : Qt.point(0,0)
-    //    ratio: Qt.point(0.6,0)
-    //  }
-
     // this is the moving item containing the level and player
     Item {
         id: viewPort
@@ -87,20 +78,8 @@ Scene {
         PhysicsWorld {
             id: physicsWorld
             gravity: Qt.point(0, 35)
-            debugDrawVisible: true // enable this for physics debugging
+            //debugDrawVisible: true // enable this for physics debugging
             z: 1000
-
-            onPreSolve: {
-                //this is called before the Box2DWorld handles contact events
-                var entityA = contact.fixtureA.getBody().target
-                var entityB = contact.fixtureB.getBody().target
-                if((entityB.entityType === "platform"|| entityB.entityType ==="springboard" ) && entityA.entityType === "player" &&
-                        entityA.y + entityA.height > entityB.y) {
-                    //by setting enabled to false, they can be filtered out completely
-                    //-> disable cloud platform collisions when the player is below the platform
-                    contact.enabled = false
-                }
-            }
         }
 
         Loader {
@@ -127,6 +106,12 @@ Scene {
             onGameWin: {
                 handCoin()
                 game_win()
+            }
+
+            onDied_once: {
+                playerImg.opacity=0.5
+                die_once_warning.visible=true
+                died_once_timer.running=true
             }
         }
 
@@ -193,8 +178,43 @@ Scene {
         Text {
             anchors.bottom: parent.bottom
             text: player.invincible == true ? "Invincible!": ""
-            font.pixelSize: 11
+            font.pixelSize: 13
+            color: "red"
         }
+    }
+
+    Timer{
+        id:died_once_timer
+        running: false
+        repeat: false
+        interval: 1000
+        onTriggered:{
+            player.playerImg.opacity=1
+            die_once_warning.visible=false
+        }
+    }
+
+    Rectangle {
+       id:die_once_warning
+       visible: false
+       height: 25
+       width: 40
+       anchors.horizontalCenter: parent.horizontalCenter
+       anchors.top: parent.top
+       color: "transparent"
+       Image {
+           id:img_heart
+           anchors.horizontalCenter: parent.horizontalCenter
+           anchors.verticalCenter: parent.verticalCenter
+           width: 25
+           height: 25
+           source: "../../assets/lalala/heart.png"
+       }
+       Text {
+           anchors.left: img_heart.right
+           text: " -1 "
+           font.pixelSize: 11
+       }
     }
 
     Rectangle{
@@ -312,7 +332,7 @@ Scene {
         // reset player
 
         player.reset()
-        player.resetContacts()
+        //player.resetContacts()
         // reset opponents
         var opponents = entityManager.getEntityArrayByType("opponent")
         for(var opp in opponents) {
@@ -340,6 +360,11 @@ Scene {
         {
             hearts[heart].reset()
         }
+
+//        var floatspringboards = entityManager.getEntityArrayByType("float_springboard")
+//        for(var floatspringboard in floatspringboards){
+//            floatspringboards[floatspringboard].reset()
+//        }
     }
 
     function stopLevel() {
@@ -348,73 +373,12 @@ Scene {
         for(var opp in opponents) {
             opponents[opp].stop()
         }
+
+//        var floatspringboards = entityManager.getEntityArrayByType("float_springboard")
+//        for(var floatspringboard in floatspringboards){
+//            floatspringboards[floatspringboard].stop()
+//        }
     }
-
-    //  /**
-    // * BACKGROUND -----------------------------------------
-    // */
-    //  // background image
-    //  BackgroundImage {
-    //      id: bgImage
-
-    //      anchors.centerIn: parent.gameWindowAnchorItem
-
-    //      // this property holds which background to show
-    //      property int bg: 0
-
-    //      // paths to all backgrounds
-    //      property string bg0: "../../assets/backgroundImage/day_bg.png"
-    //      property string bg1: "../../assets/backgroundImage/dusk_bg.png"
-    //      property string bg2: "../../assets/backgroundImage/night_bg.png"
-
-    //      // if available, load background from levelData
-    //      property int loadedBackground: {
-    //          if(gameWindow.levelEditor && gameWindow.levelEditor.currentLevelData
-    //                  && gameWindow.levelEditor.currentLevelData["customData"]
-    //                  && gameWindow.levelEditor.currentLevelData["customData"]["background"])
-    //              parseInt(gameWindow.levelEditor.currentLevelData["customData"]["background"])
-    //          else
-    //              -1 // set to -1 if background property is not available
-    //      }
-
-    //      // set image source depending on bg-property value
-    //      source: bg == 0 ? bg0 : bg == 1 ? bg1 : bg2
-    //  }
-
-    //  Rectangle {
-    //      id: mainBar
-
-    //      width: parent.gameWindowAnchorItem.width
-    //      height: 40
-    //      color: "#00000000"
-
-    //      anchors.top: parent.gameWindowAnchorItem.top
-    //      anchors.left: parent.gameWindowAnchorItem.left
-
-    //      // background gradient
-    //      gradient: Gradient {
-    //          GradientStop { position: 0.0; color: "transparent" }
-    //          GradientStop { position: 0.5; color: "#80ffffff" }
-    //          GradientStop { position: 1.0; color: "transparent" }
-    //      }
-
-    //      // back to menu button
-    //      PlatformerImageButton {
-    //          id: menuButton
-
-    //          image.source: "../../assets/ui/home.png"
-
-    //          width: 40
-    //          height: 30
-
-    //          anchors.verticalCenter: parent.verticalCenter
-    //          anchors.right: parent.right
-    //          anchors.rightMargin: 5
-
-    //          // go back to MenuScene
-    //          onClicked: backPressed()
-    //      }
-    //  }
 
 }
 

@@ -11,10 +11,6 @@ TiledEntityBase {
 
     Row {
         id: tileRow
-        //    Tile {
-        //      pos: "left"
-        //      image: "../../assets/platform/hahaha/left.png"
-        //    }
         Repeater {
             model: size
             Tile {
@@ -22,10 +18,6 @@ TiledEntityBase {
                 image: "../../assets/platform/hahaha/mid.png"
             }
         }
-        //    Tile {
-        //      pos: "right"
-        //      image: "../../assets/platform/hahaha/right.png"
-        //    }
     }
 
     BoxCollider {

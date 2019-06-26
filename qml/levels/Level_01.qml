@@ -7,6 +7,15 @@ Levels.LevelBase {
     id: level
     width: 42 * gameScene.gridSize
 
+//    VoidBug{
+//        x: gameScene.gridSize*2
+//        y: level.height- 8*gameScene.gridSize
+//    }
+
+//    Apple{
+//        x: gameScene.gridSize * 2
+//        y: level.height-( 9+1)*gameScene.gridSize
+//    }
 
     Repeater{
         model:4

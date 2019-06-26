@@ -11,14 +11,21 @@ SceneBase {
     signal backPressed
     signal levelPressed(string selectedLevel)
 
-    property int activeLevel:1
-    property int flag:1
-    //property int flag : 8
-    // background
+    property int activeLevel:1 //当前是第几关
+    property int flag:1 //已经过的最大关卡数
+
     Rectangle {
         id: background
         anchors.fill: parent.gameWindowAnchorItem
         color: "lightblue"
+
+        Image {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: dp(20)
+
+            source: "../../assets/ui/levelsBtn.png"
+        }
 
     }
 
@@ -90,14 +97,13 @@ SceneBase {
                             height: 36
                             anchors.centerIn: parent
                             buttonText.color:  flag<level? "white": "lightgreen"
-                            buttonText.font.family: standardFont.name
                             buttonText.font.pixelSize: 24
                             onClicked: {
                                 activeLevel=level
                                 if(flag<activeLevel){
                                     warning.visible=true
                                     timer1.running=true
-                                    console.log("falg++++++"+flag)
+                                    //console.log("falg++++++"+flag)
                                 }
                                 else{
                                     var levelFile = "Level_"+level+".qml";

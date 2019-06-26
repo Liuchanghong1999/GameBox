@@ -26,31 +26,12 @@ int main(int argc, char *argv[])
     Game game;
 
     game.loadGame();
-    //    // Game is played; changes are made...
-    //    QTextStream(stdout) << "Game ended in the following state:\n";
-    //    game.print();
-
-    //    qWarning() << "hhh";
-
-    //    if (!player) {
-    //        qWarning() << "xxx";
-    //    }
-    //    if (player) {
-    ////        player->setName("Liu Changhong");
-    //        qWarning() << player->name() << "is having a game!";
-    //        qWarning() << "He has played" << process->levels();
-    //        qWarning() << "hhh";
-    //    } else {
-    //        qWarning() << component.errors();
-    //    }
-
-        if(!game.isExist) {
+    if(!game.isExist)
+    {
             game.modify();
-        }
+    }
 
-        QTextStream(stdout) << game.isExist << "rrr\n";
 
-//        game.player()->setName("uuu");
         game.saveGame();
 
     FelgoApplication felgo;

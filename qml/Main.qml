@@ -1,31 +1,6 @@
 //author:yanyuping
 //date:2018.6.20
 
-//import Felgo 3.0
-//import QtQuick 2.0
-//import "common"
-//import "scenes"
-//import "levels"
-
-//GameWindow {
-//  id: gameWindow
-
-//  activeScene: gameScene
-//  screenHeight: 640
-
-//  AudioManager {
-//    id: audioManager
-//  }
-
-//  GameScene {
-//    id: gameScene
-//  }
-//}
-
-
-//author:yanyuping
-//date:2018.6.20
-
 import Felgo 3.0
 import QtQuick 2.0
 import Mario 1.0
@@ -49,9 +24,12 @@ GameWindow {
 
     Component.onCompleted: {
         game.loadGame()
+        console.log(game.player.avatar)
         selectLevelScene.initFlag(game.process.levels)
         shopScene.mycoins=game.process.coins
         gameScene.player.life=game.process.lives
+
+        mainScene.changeInfoPage.init(game)
     }
 
     Login{
@@ -76,6 +54,7 @@ GameWindow {
             game.player.name=name.text
             game.player.password=password.text
             game.saveGame()
+            mainScene.changeInfoPage.init(game)
             name.clear()
             password.clear()
         }
@@ -84,6 +63,7 @@ GameWindow {
 
     ForgetPassword{
         id:forgetPassword
+        onCheckPressed: checkName(game)
         onBackPressed: gameWindow.state="login"
         //password: game.player.password
     }
@@ -95,6 +75,11 @@ GameWindow {
             gameWindow.state="login"
 
             game.saveGame()
+        }
+        changeInfoPage.onSavePressed: changeInfoPage.saveSetting(game)
+        changeInfoPage.onUnsavePressed: {
+            changeInfoPage.init(game) //在没有改变的情况或者是改了却不保存，应该将所有内容依然为原来的值
+            //game.saveGame()
         }
     }
 
@@ -146,8 +131,11 @@ GameWindow {
 
         onGame_win: {
             gameWindow.state="gamewin";
+            console.log("selectLevelScene.flag:"+selectLevelScene.flag)
+            console.log("selectLevelScene.activeLevel:"+selectLevelScene.activeLevel)
             if(selectLevelScene.flag==selectLevelScene.activeLevel){
                 selectLevelScene.flag+=1
+                //console.log("hahahahahhaha"+selectLevelScene.flag+"hhhh"+game.process.levels)
                 game.process.levels=selectLevelScene.flag
                 game.saveGame()
             }
@@ -191,10 +179,12 @@ GameWindow {
 
     GameWinScene{
         id:gameWinScene
+
         onBackPressed: gameWindow.state="selectLevel";
         onNextLevelPressed: {
-
             var nextLevel=selectLevelScene.activeLevel+1
+            selectLevelScene.activeLevel+=1
+            //console.log("selectLevelScene.activeLevel: "+selectLevelScene.activeLevel)
             var levelFile
             if(nextLevel < 10) levelFile = "Level_0"+nextLevel+".qml";
             else levelFile = "Level_"+nextLevel+".qml";

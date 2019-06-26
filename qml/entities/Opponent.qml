@@ -3,30 +3,21 @@
 
 import QtQuick 2.0
 import Felgo 3.0
-import "../editorElements"
 
 // this is the base class for all opponents
 PlatformerEntityBaseDraggable {
     id: opponent
     entityType: "opponent"
 
-    // the opponent's start position
-    // These are the coordinates, to which the opponent gets reset,
-    // when resetting the level.
     property int startX
     property int startY
 
-    // this is true while the opponent is alive
     property bool alive: true
 
-    // After an opponent dies, we want to show it's dead-sprite for a short
-    // time, and then hide it.
-    // If this property is true, the opponent is invisible.
     property bool hidden: false
 
     z: 1 // to make opponent appear in front of the platforms
 
-    // set the opponent's size to it's sprite's size
     width: image.width
     height: image.height
 
@@ -41,7 +32,6 @@ PlatformerEntityBaseDraggable {
     Timer {
         id: hideTimer
         interval: 2000
-
         onTriggered: hidden = true
     }
 
@@ -76,17 +66,12 @@ PlatformerEntityBaseDraggable {
 
     function die() {
         alive = false
-
         hideTimer.start()
-
         if(variationType == "walker")
             audioManager.playSound("opponentWalkerDie")
         else if(variationType == "jumper")
             audioManager.playSound("opponentJumperDie")
-
         player.kiiljump()
-        // for every killed opponent, the time gets set back a little bit
-        //    gameScene.time -= 5
     }
 
     function stop()

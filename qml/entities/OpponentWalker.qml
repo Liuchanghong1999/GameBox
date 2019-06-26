@@ -43,8 +43,6 @@ Opponent {
     // the opponents main collider
     PolygonCollider {
         id: collider
-
-        // the vertices, forming the shape of the collider
         vertices: [
             Qt.point(1, 15),
             Qt.point(31, 15),
@@ -53,8 +51,6 @@ Opponent {
             Qt.point(6, 31),
             Qt.point(1, 30)
         ]
-
-        // the bodyType is dynamic
         bodyType: Body.Dynamic
 
         active: !alive ? false : true
@@ -78,9 +74,6 @@ Opponent {
         }
     }
 
-    // The abyss checkers check for abysses left and right of the
-    // opponent. With this, we can let the opponent change direction,
-    // before it would fall of an edge.
     BoxCollider {
         id: leftAbyssChecker
 
@@ -144,13 +137,8 @@ Opponent {
 
     // reset the opponent
     function reset() {
-        // this is the reset function of the base entity Opponent.qml
         reset_super()
-
-        // reset direction
         direction = -1
-
-        // reset force
         collider.linearVelocity.x = Qt.point(direction * speed, 0)
     }
 }

@@ -17,7 +17,6 @@ EntityBase {
         source: "../../assets/lalala/finish.png"
     }
 
-
     BoxCollider {
         anchors.fill: parent
         bodyType: Body.Static

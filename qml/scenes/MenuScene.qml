@@ -11,10 +11,10 @@ SceneBase {
     opacity: 0
     visible: opacity>0
 
-    signal selectLevelPressed
-    signal helpScenePressed
-    signal shopPressed
-    signal exit
+    signal selectLevelPressed  //进入关卡选择
+    signal helpScenePressed //进入帮助
+    signal shopPressed //进入商店
+    signal exit //退出游戏
 
     // background
     Rectangle {
@@ -53,14 +53,14 @@ SceneBase {
 
             anchors.topMargin: 10
 
-            source: "../../assets/ui/header.png"
+            source: "../../assets/ui/Header.png"
         }
     }
 
     PlatformerImageButton {
         id: levelButton
 
-        image.source: "../../assets/ui/playButton.png"
+        image.source: "../../assets/ui/levelsBtn.png"
 
         width: 150
         height: 40
@@ -84,7 +84,7 @@ SceneBase {
     PlatformerImageButton {
         id: helpButton
 
-        image.source: "../../assets/ui/levelsButton.png"
+        image.source: "../../assets/ui/helpBtn.png"
 
         width: 150
         height: 40
@@ -104,7 +104,7 @@ SceneBase {
     PlatformerImageButton {
         id: shopButton
 
-        image.source: "../../assets/ui/playButton.png"
+        image.source: "../../assets/ui/shopBtn.png"
 
         width: 150
         height: 40

@@ -84,7 +84,7 @@ void Game::modify()
 {
     mPlayer->setName("");
     mPlayer->setPassword("");
-    mPlayer->setAvatar("/assets/avatar.png");
+    mPlayer->setAvatar("file:///root/yypGame/assets/avatar.jpg");
     mPlayer->setSex("女");
     mPlayer->setBirthdayYear("2000");
     mPlayer->setHometown("China");

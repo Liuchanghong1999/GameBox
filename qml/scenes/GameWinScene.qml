@@ -10,11 +10,11 @@ Scene {
     opacity: 0
     visible: opacity>0
 
-    signal backPressed
-    signal nextLevelPressed
+    signal backPressed  //返回到关卡选择
+    signal nextLevelPressed  //进入到下一关
 
     Rectangle{
-        anchors.fill: parent
+        anchors.fill: parent.gameWindowAnchorItem
         color: "lightblue"
 
         Image {
@@ -22,13 +22,14 @@ Scene {
             height:36
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: txt.top
-            source: "/root/yypGame/assets/backgroundImage/hh2.jpg"
+            source: "/root/yypGame/assets/backgroundImage/hh2.png"
         }
 
         Text {
             id:txt
             anchors.centerIn: parent
             text: "Congratulations!"
+            font.pixelSize: 25
         }
 
         Rectangle {

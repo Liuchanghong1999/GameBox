@@ -32,12 +32,12 @@ Item {
         id:saveInfoDialog
         contentItem: Rectangle{
             color:"lightskyblue"
-            implicitWidth:dp(300)
-            implicitHeight: dp(60)
+            implicitWidth:dp(600)
+            implicitHeight: dp(100)
             Text {
                 text: "Do you wanna save changes?"
                 color: "navy"
-                font.pixelSize: sp(10)
+                font.pixelSize: sp(25)
                 anchors.centerIn: parent
             }
         }
@@ -60,43 +60,5 @@ Item {
         }
         standardButtons: Dialog.Ok | Dialog.Cancel
     }
-
-    //    QQD.Dialog{
-    //        id:selectPicsDialog
-    //        contentItem: Rectangle{
-    //            color:"lightskyblue"
-    //            implicitWidth:dp(150)
-    //            implicitHeight: dp(60)
-
-    //            Button{
-    //                id:cameraBtn
-    //                anchors.verticalCenter: parent.verticalCenter
-    //                anchors.left: parent.left
-    //                anchors.leftMargin: dp(10)
-    //                text: "相机"
-    //                onClicked: {
-    //                    onClicked: nativeUtils.displayCameraPicker("Take Photo")
-    //                }
-
-    //                Connections {
-    //                  target: nativeUtils
-    //                  onCameraPickerFinished: {
-    //                    avatar.source = ""
-    //                    if(accepted) {
-    //                      avatar.source = path
-    //                    }
-    //                  }
-    //                }
-
-    //            Button{
-    //                id:filesBtn
-    //                anchors.verticalCenter: parent.verticalCenter
-    //                anchors.right: parent.right
-    //                anchors.rightMargin: dp(10)
-    //                text: "文件"
-
-    //            }
-    //        }
-    //    }
 }
 

@@ -15,7 +15,7 @@ EntityBase {
 
     Rectangle{
         anchors.fill: parent
-        color: "red"
+        color: "green"
     }
 
 

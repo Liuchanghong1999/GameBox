@@ -8,10 +8,11 @@ import "../common"
 EntityBase {
     id: player
     entityType: "player"
-    width: 50
-    height: 50
+    width: 51
+    height: 52
 
     // add some aliases for easier access to those properties from outside
+    property alias playerImg:playerImg
     property alias collider: collider
     property alias horizontalVelocity: collider.linearVelocity.x
     property int score: 0
@@ -19,9 +20,12 @@ EntityBase {
     property bool invincible: false
     property int life:0
 
+    signal died_once //still can play game
     signal died
     signal gameWin
     //  property alias controller: controller
+
+    property int pictureNum:1
 
     property int contacts: 0
     state: contacts > 0 ? "walking" : "jumping"
@@ -30,26 +34,14 @@ EntityBase {
     // here you could use a SpriteSquenceVPlay to animate your player
     MultiResolutionImage {
         id:playerImg
-        source: "../../assets/player/runright.png"
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
     }
-
-//    SpriteSequence {
-//        id: playerImg
-//        anchors.centerIn: parent
-
-//        Sprite {
-//            frameCount: 4
-//            frameRate: 5
-//            frameWidth: 50
-//            frameHeight: 60
-//            source: "../../assets/bird/1.png"
-//        }
-//    }
 
     BoxCollider {
         id: collider
         height: parent.height
-        width: 20
+        width: 22
         anchors.horizontalCenter: parent.horizontalCenter
         // this collider must be dynamic because we are moving it by applying forces and impulses
         bodyType: Body.Dynamic // this is the default value but I wanted to mention it ;)
@@ -80,18 +72,10 @@ EntityBase {
             }
 
             if(otherEntity.entityType === "finalStation"){
-
                 gameWin()
             }
 
         }
-
-        //    fixture.onEndContact: {
-        //        var otherEntity = other.getBody().target
-        //        if(otherEntity.entityType=== "thorn") {
-        //            die(false);
-        //        }
-        //    }
 
         // limit the horizontal velocity
         onLinearVelocityChanged: {
@@ -132,7 +116,7 @@ EntityBase {
                 var oppLowestY = otherEntity.y + otherEntity.height
 
                 if(playerLowestY < oppLowestY - 5) {
-                    player.kiiljump()
+                    player.killjump()
                     //console.debug("kill opponent")
                     otherEntity.die()
 
@@ -168,7 +152,6 @@ EntityBase {
 
     }
 
-
     // this timer is used to slow down the players horizontal movement. the linearDamping property of the collider works quite similar, but also in vertical direction, which we don't want to be slowed
     Timer {
         id: updateTimer
@@ -177,31 +160,35 @@ EntityBase {
         running: true
         repeat: true
         onTriggered: {
-
             var xAxis = controller.xAxis;
-            // if xAxis is 0 (no movement command) we slow the player down until he stops
+
             if(xAxis == 0) {
+                playerImg.source="../../assets/player/player1.png"
                 if(Math.abs(player.horizontalVelocity) > 10) player.horizontalVelocity /= 1.5
                 else player.horizontalVelocity = 0
             }
+            if(player.state=="jumping")
+                playerImg.source="../../assets/player/player4.png"
+             else if(xAxis==1||xAxis==-1)
+            {
+                playerImg.source="../../assets/player/player"+pictureNum+".png"
+                pictureNum++
+            }
+            // if xAxis is 0 (no movement command) we slow the player down until he stops
+
         }
     }
 
-    MultiResolutionImage {
-        id: invincibilityOverlayImage
-        source: "../../assets/player/player_rainbow.png"
-        opacity: 0
-        NumberAnimation on opacity {
-            id: invincibilityOverlayImageFadeOut
-            from: 1
-            to: 0
-            duration: 500
-        }
-    }
 
-    Timer {
-        id: invincibilityWarningTimer
-        onTriggered: warnInvincibility()
+    Timer{
+        id:walk_timer
+        running: true
+        repeat: true
+        interval: 100
+        onTriggered: {
+            pictureNum /= 6;
+            pictureNum++;
+        }
     }
 
     Timer {
@@ -209,7 +196,9 @@ EntityBase {
         onTriggered: endInvincibility()
     }
 
+
     function jump() {
+        playerImg.source="../../assets/player/player1.png"
         console.debug("jump requested at player.state " + state)
         if(player.state == "walking") {
             console.debug("do the jump")
@@ -226,7 +215,7 @@ EntityBase {
         //}
     }
 
-    function kiiljump(){
+    function killjump(){
         collider.linearVelocity.x=-300
         collider.linearVelocity.y=-400
 
@@ -245,6 +234,7 @@ EntityBase {
                 life--
             //gameScene.resetLevel()
             died()
+
         }
 
         else if(invincible)
@@ -255,12 +245,12 @@ EntityBase {
         else if((player.life>0) && !invincible)
         {
             player.life--
+            died_once()
+            audioManager.playSound("playerDie")
         }
     }
 
     function startInvincibility(interval) {
-        // this is the time the player is warned, that the invincibility will
-        // end soon
         var warningTime = 500
 
         // the interval (invincibility time) must be at least as long as the
@@ -268,21 +258,10 @@ EntityBase {
         if(interval < warningTime)
             interval = warningTime
 
-        // show invincibility overlay
-        invincibilityOverlayImage.opacity = 1
-
-        // Calculate and set time until the invincibility warning.
-        // This value is at least 0.
-        invincibilityWarningTimer.interval = interval - warningTime
-        // start timer
-        invincibilityWarningTimer.start()
-
-        // Calculate and set time until the invincibility ends.
-        // This value is at least warningTime.
         invincibilityTimer.interval = interval
         // start timer
         invincibilityTimer.start()
-
+        playerImg.opacity=0.5
 
         invincible = true
         audioManager.playSound("playerInvincible")
@@ -290,13 +269,10 @@ EntityBase {
         console.debug("start invincibility; interval: "+interval)
     }
 
-    function warnInvincibility() {
-        invincibilityOverlayImageFadeOut.start()
-        console.debug("warn invincibility")
-    }
 
     function endInvincibility() {
         invincible = false
+        playerImg.opacity=1
         audioManager.stopSound("playerInvincible")
         console.debug("stop invincibility")
     }
@@ -305,11 +281,11 @@ EntityBase {
     function changeSpriteOrientation() {
         if(controller.xAxis == -1) {
             playerImg.mirrorX = true
-            invincibilityOverlayImage.mirrorX = true
+            //invincibilityOverlayImage.mirrorX = true
         }
         else if (controller.xAxis == 1) {
             playerImg.mirrorX = false
-            invincibilityOverlayImage.mirrorX = false
+            //invincibilityOverlayImage.mirrorX = false
         }
     }
 
@@ -326,31 +302,27 @@ EntityBase {
         // reset score
         score = 0
 
-        //resetContacts()
+        resetContacts()
 
         //    // reset invincibility
         invincible = false
         invincibilityTimer.stop()
-        invincibilityWarningTimer.stop()
-        invincibilityOverlayImage.opacity = 0
+        playerImg.opacity=1
         audioManager.stopSound("playerInvincible")
     }
 
     function stop(){
         score = 0
-
+        resetContacts()
         collider.linearVelocity = Qt.point(0,0)
         invincible = false
         invincibilityTimer.stop()
-        invincibilityWarningTimer.stop()
-        invincibilityOverlayImage.opacity = 0
+        playerImg.opacity=1
         audioManager.stopSound("playerDie")
         audioManager.stopSound("playerInvincible")
     }
 
     function resetContacts() {
-        // Reset the contacts to ensure the player starts each level
-        // with zero contacts.
         contacts = 0
     }
 }

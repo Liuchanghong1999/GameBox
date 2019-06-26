@@ -12,9 +12,12 @@ import "../common"
 Scene{
     opacity: 0
     visible: opacity>0
-    property alias gobackhome: gobackhome
-    signal enterGame
-    signal exit
+    property alias gobackhome: gobackhome   //退出登录的MouseArea
+    property alias changeInfoPage:changeInfoPage    //打开资料修改页面
+
+    signal enterGame //进入游戏
+    signal exit //发送退出登录的信号
+
 
     Rectangle {
         anchors.fill: parent.gameWindowAnchorItem
@@ -120,11 +123,10 @@ Scene{
             anchors.top: parent.top
             anchors.topMargin: background.height-height/2
             anchors.leftMargin: dp(10)
-            source: "images/avatar.jpg"
+            source: changeInfoPage.avatar.source
             smooth: true
             antialiasing: true
             visible: false
-
         }
 
         Rectangle{

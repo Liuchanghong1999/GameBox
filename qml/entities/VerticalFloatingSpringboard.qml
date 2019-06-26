@@ -15,7 +15,6 @@ TiledEntityBase {
     // direction
     size: 1
 
-
     Row {
         id: tileRow
         Repeater {

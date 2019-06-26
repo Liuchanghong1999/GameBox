@@ -10,12 +10,11 @@ import QtGraphicalEffects 1.0
 Scene{
     opacity: 0
     visible: opacity>0
+
     property alias gobackhome: gobackhome
 
     Rectangle {
-        anchors.fill: parent
-
-
+        anchors.fill: parent.gameWindowAnchorItem
         border.color: "red"
         color: "white"
         gradient: Gradient {

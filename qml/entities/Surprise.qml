@@ -16,8 +16,8 @@ TiledEntityBase {
 
     Column {
         id: tileRow
-        Coin{ id:coin; collected: true; /*starActive: false*/}
-        Tile {
+        Coin{ id:coin; collected: true; }
+        Tile{
             id:box
             image: "../../assets/lalala/surprise.png"
         }
@@ -62,7 +62,7 @@ TiledEntityBase {
 
         // set size and position
         width: 10
-        height: 1
+        height: 0.1
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
@@ -82,9 +82,12 @@ TiledEntityBase {
 
         fixture.onBeginContact: {
             var otherEntity = other.getBody().target
-            if(otherEntity.entityType==="player")
+            if(otherEntity.entityType==="player"){
                 strike++
+            }
             if(strike==1){
+                box.image="../../assets/lalala/barrier.png"
+                audioManager.playSound("dragEntity")
                 coin.collected=false
             }
         }
@@ -115,5 +118,6 @@ TiledEntityBase {
     function reset(){
         coin.collected=true
         strike=0
+        box.image= "../../assets/lalala/surprise.png"
     }
 }

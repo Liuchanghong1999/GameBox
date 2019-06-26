@@ -7,36 +7,12 @@ Item {
 
     Component.onCompleted: handleMusic()
 
-    /**
-   * Background Music ----------------------------------
-   */
     BackgroundMusic {
         id: menuMusic
-
         autoPlay: false
-
         source: "../../assets/audio/music/menuMusic.mp3"
     }
 
-    BackgroundMusic {
-        id: playMusic
-
-        autoPlay: false
-
-        source: "../../assets/audio/music/playMusic.mp3"
-    }
-
-    BackgroundMusic {
-        id: editMusic
-
-        autoPlay: false
-
-        source: "../../assets/audio/music/editMusic.mp3"
-    }
-
-    /**
-   * Sounds ----------------------------------
-   */
     SoundEffect {
         id: playerJump
         source: "../../assets/audio/sounds/phaseJump1.wav"
@@ -110,15 +86,8 @@ Item {
 
     // this function sets the music, depending on the current scene and the gameScene's state
     function handleMusic() {
-        if(activeScene === gameScene) {
-            if(gameScene.state == "play" || gameScene.state == "test")
-                audioManager.startMusic(playMusic)
-            else if(gameScene.state == "edit")
-                audioManager.startMusic(editMusic)
-        }
-        else {
             audioManager.startMusic(menuMusic)
-        }
+
     }
 
     // starts the given music
@@ -129,10 +98,7 @@ Item {
 
         // otherwise stop all music tracks
         menuMusic.stop()
-        playMusic.stop()
-        editMusic.stop()
 
-        // play the music
         music.play()
     }
 
@@ -150,27 +116,18 @@ Item {
             collectCoin.play()
         else if(sound === "collectMushroom")
             collectMushroom.play()
-        else if(sound === "finish")
-            finish.play()
         else if(sound === "opponentWalkerDie")
             opponentWalkerDie.play()
-        else if(sound === "opponentJumperDie")
-            opponentJumperDie.play()
         else if(sound === "start")
             start.play()
         else if(sound === "click")
             click.play()
-        else if(sound === "dragEntity")
+        else if(sound==="dragEntity")
             dragEntity.play()
-        else if(sound === "createOrDropEntity")
-            createOrDropEntity.play()
-        else if(sound === "removeEntity")
-            removeEntity.play()
         else
             console.debug("unknown sound name:", sound)
     }
 
-    // stop the sound effect with the given name
     function stopSound(sound) {
         if(sound === "playerInvincible")
             playerInvincible.stop()

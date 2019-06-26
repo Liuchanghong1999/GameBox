@@ -94,8 +94,8 @@ void Character::read(const QJsonObject &json)
     if (json.contains("hometown") && json["hometown"].isString())
         mHometown = json["hometown"].toString();
 
-    if (json.contains("avarar") && json["avarar"].isString())
-        mAvatar = json["avarar"].toString();
+    if (json.contains("avatar") && json["avatar"].isString())
+        mAvatar = json["avatar"].toString();
 
     if (json.contains("constellation") && json["constellation"].isString())
         mConstellation = json["constellation"].toString();

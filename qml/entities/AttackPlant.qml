@@ -17,22 +17,27 @@ EntityBase {
     property int attac_flag : 0
 
     x: row*gameScene.gridSize
-    y: level.height - (column+1)*gameScene.gridSize
+    y: level.height - (column+1)*gameScene.gridSize-6
     width: gameScene.gridSize
     height: gameScene.gridSize
 
 
-    Rectangle{
+    Image {
         id:plant
-        color: "purple"
-        anchors.fill: parent
+        width: 40
+        height: 40
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        source: "../../assets/opponent/plant.png"
         z:1
+        mirror: direction==-1
     }
+
 
     Rectangle{
         id:bullet
-        width: parent.width/2; height: parent.height/2
-        radius:width/2
+        width: parent.width/4; height: parent.height/4
+        radius:width/8
         color: "black"
     }
 

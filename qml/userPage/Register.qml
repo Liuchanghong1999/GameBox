@@ -10,9 +10,9 @@ Scene{
 
     opacity: 0
     visible: opacity>0
-    property alias setPassword:dialogs.savePasswordDialog
-    property alias name: name
-    property alias password: password
+    property alias setPassword:dialogs.savePasswordDialog  //确认密码的对话框
+    property alias name: name //名字
+    property alias password: password  //密码
 
     signal backPressed
 

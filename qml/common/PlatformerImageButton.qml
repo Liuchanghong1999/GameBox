@@ -49,12 +49,9 @@ GameButton {
     // this white rectangle covers the button when the mouse hovers above it
     Rectangle {
         id: hoverRectangle
-
         anchors.fill: parent
-
         radius: imageButton.radius
         color: "white"
-
         // when the mouse hovers over the button, this rectangle is slightly visible
         opacity: hovered ? 0.3 : 0
     }

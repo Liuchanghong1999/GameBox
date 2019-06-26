@@ -7,8 +7,6 @@ Levels.LevelBase {
     id: level
     width: 42 * gameScene.gridSize
 
-
-
     BottomGround{
         row:0
         column:0
@@ -21,8 +19,8 @@ Levels.LevelBase {
         size:5
     }
 
-
     Platform{
+        id:lala
         row:8
         column:2
         size:6
@@ -40,7 +38,6 @@ Levels.LevelBase {
         x: gameScene.gridSize *  8
         y: level.height - ( 3 +1)* gameScene.gridSize
     }
-
 
     HorizontalFloatSpringboard{
         row:15
@@ -70,24 +67,14 @@ Levels.LevelBase {
         }
     }
 
-
-
-
-    //  OpponentWalker{
-    //      x: gameScene.gridSize *  29
-    //      y: level.height - ( 3 +1)* gameScene.gridSize
-    //  }
-
-
-    HorizontalFloatSpringboard{
-        row:29
+    Springboard{
+        row:31
         column:4
         size:3
-        farthest: gameScene.gridSize * 4
     }
 
     OpponentWalker{
-        x: gameScene.gridSize *  30
+        x: gameScene.gridSize *  32
         y: level.height - (5+1)* gameScene.gridSize
     }
 
@@ -97,13 +84,17 @@ Levels.LevelBase {
         size: 10
     }
 
+    Repeater{
+        model:10
+        Coin{
+            x: gameScene.gridSize *(index+37)
+            y: level.height- (4+1)*gameScene.gridSize
+        }
+    }
+
     Opponentjumper{
         x: gameScene.gridSize * 42
         y: level.height - ( 7 +1)* gameScene.gridSize
-    }
-
-    Coin{
-
     }
 
     Ground{
@@ -115,7 +106,7 @@ Levels.LevelBase {
     BottomGround{
         row:64
         column: 0
-        size: 60
+        size: 40
     }
 
     Thorn{
@@ -129,6 +120,14 @@ Levels.LevelBase {
         column:1
         attack_distance: gameScene.gridSize * 7
         direction: -1
+    }
+
+    Repeater{
+        model:8
+        Coin{
+            x: (55+ index-1) * gameScene.gridSize
+            y: level.height- (13 +1)*gameScene.gridSize
+        }
     }
 
     Platform{
@@ -165,6 +164,45 @@ Levels.LevelBase {
             x: gameScene.gridSize*(index*6 + 72)
             y: level.height - (7+1)* gameScene.gridSize
         }
+    }
+
+    Springboard{
+        row:104
+        column:4
+        size:3
+    }
+
+    Repeater{
+        model:3
+        Coin{
+            x: (104+ index) * gameScene.gridSize
+            y: level.height- (5 +1)*gameScene.gridSize
+        }
+    }
+
+    Springboard{
+        row:111
+        column:4
+        size:3
+    }
+
+    AttackPlant{
+        row:111
+        column: 5
+        attack_distance: gameScene.gridSize * 10
+        direction: -1
+    }
+
+    Ground{
+        id:last
+        row:109
+        column:0
+        size:2
+    }
+
+    FinalStation{
+        x:(last.row+1)*gameScene.gridSize
+        anchors.bottom: last.top
     }
 
 }

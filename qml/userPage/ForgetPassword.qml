@@ -10,10 +10,14 @@ Scene{
     opacity: 0
     visible: opacity>0
 
-    signal backPressed
+    signal backPressed  //返回到登录页面
+    signal checkPressed  //点击查询时发送信号
+
     property alias name:name.text
 
     property string password
+
+    property bool is_correct:false  //标志用户名是否存在
 
     Rectangle {
         id: mainRec
@@ -92,7 +96,16 @@ Scene{
                 id:area
                 anchors.fill: parent
                 onClicked: {
-                    check_success.visible=true
+                    checkPressed()
+                    if(is_correct){
+                        check_success.visible=true
+                        timer.running=true
+                    }
+                    else {
+                        check_fail.visible=true
+                        timer.running=true
+                    }
+
                 }
             }
 
@@ -109,16 +122,50 @@ Scene{
         color: "yellow"
         opacity: 0.4
         Text {
+            id:password
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            text: "Your password : " + password
+            //text: "Your password : " + password
             font.pixelSize: sp(14)
         }
-        MouseArea{
-            anchors.fill: parent
-            onClicked: parent.visible=false
+    }
 
+    Rectangle{
+        id:check_fail
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        visible: false
+        width: 150
+        height: 30
+        color: "yellow"
+        opacity: 0.4
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            text: "查询失败，用户名不存在"
         }
+    }
+
+    Timer{
+        id:timer
+        running: false
+        repeat: false
+        interval: 1000
+        onTriggered:{
+            check_success.visible=false
+            check_fail.visible=false
+        }
+    }
+
+    function checkName(game)
+    {
+        is_correct= (game.player.name === name.text)
+        display_password(game)
+    }
+
+    function display_password(game)
+    {
+        password.text="Your password : "+game.player.password
     }
 
 }

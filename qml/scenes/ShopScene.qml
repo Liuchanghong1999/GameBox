@@ -9,18 +9,26 @@ Scene{
     opacity: 0
     visible: opacity>0
 
-    property int mycoins:0
-    signal backPressed
-    signal buy_success
+    property int mycoins:0  //金币总数
+    signal backPressed  //返回到菜单
+    signal buy_success  //购买成功
 
-    property int price:10
-    property int player_life:0
+    property int price:10  //价格
+    property int player_life:0  //生命数
 
 
     Rectangle{
         color: "lightblue"
         anchors.fill: parent.gameWindowAnchorItem
 
+
+        Image {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: dp(20)
+
+            source: "../../assets/ui/shopBtn.png"
+        }
 
         PlatformerImageButton {
             id: menuButton
@@ -111,7 +119,7 @@ Scene{
             }
             Text {
                 anchors.left: coin_img.right
-                text: " *100"
+                text: " *10"
                 font.pixelSize: sp(14)
             }
         }
@@ -211,10 +219,12 @@ Scene{
         }
     }
 
+    //当通关后会累加金币
     function addCoins(num){
         mycoins+=num
     }
 
+    //购买成功后将金币数减少
     function reduceCoins(){
         mycoins-=price
     }

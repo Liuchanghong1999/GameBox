@@ -9,20 +9,20 @@ Scene{
     opacity:0
 
     visible: opacity>0
-    signal onceAgain
-    signal exitLevel
+    signal onceAgain //再来一次
+    signal exitLevel //退出关卡
 
     Rectangle
     {
         color: "lightblue"
-        anchors.fill: parent
+        anchors.fill: parent.gameWindowAnchorItem
 
         Image {
             width: 50
             height:50
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: txt.top
-            source: "/root/yypGame/assets/backgroundImage/hh1.jpg"
+            source: "/root/yypGame/assets/backgroundImage/hh1.png"
         }
 
         Text {
@@ -30,6 +30,7 @@ Scene{
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             text: "Game Over!"
+            font.pixelSize: dp(25)
         }
 
         Rectangle {

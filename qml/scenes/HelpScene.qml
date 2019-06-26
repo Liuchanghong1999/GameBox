@@ -13,23 +13,81 @@ SceneBase {
     Rectangle{
         anchors.fill: parent.gameWindowAnchorItem
 
+        Image {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: dp(20)
 
+            source: "../../assets/ui/helpBtn.png"
+        }
 
         color: "lightblue"
 
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: dp(10)
+            anchors.top:parent.top
+            anchors.topMargin: dp(70)
+            text: "踩在老鼠上面，或是躲避它"
+        }
+
         Image {
-            width: 50
-            height:36
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: txt.top
-            source: "/root/yypGame/assets/backgroundImage/hh2.jpg"
+            anchors.left: parent.left
+            anchors.leftMargin: dp(50)
+            anchors.top:parent.top
+            anchors.topMargin: dp(100)
+            width: 25
+            height: 25
+            source: "../../assets/opponent/opponent_walker.png"
+        }
+        Image {
+            anchors.top:parent.top
+            anchors.topMargin: dp(100)
+            anchors.left: parent.left
+            anchors.leftMargin: dp(100)
+            width: 25;height: 25
+            source: "../../assets/opponent/opponent_walker_dead.png"
         }
 
         Text {
-            id:txt
-            anchors.centerIn: parent
-            text: "Help!"
+            anchors.left: parent.left
+            anchors.leftMargin: dp(10)
+            anchors.top:parent.top
+            anchors.topMargin: dp(140)
+            text: "你只能躲避它"
         }
+
+        Image {
+            anchors.top:parent.top
+            anchors.topMargin: dp(160)
+            anchors.left: parent.left
+            anchors.leftMargin: dp(50)
+            width: 25
+            height: 25
+            source: "../../assets/opponent/opponent_jumper.png"
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: dp(10)
+            anchors.top:parent.top
+            anchors.topMargin: dp(200)
+            text: "你需要躲避它的子弹"
+        }
+
+        Image {
+            anchors.top:parent.top
+            anchors.topMargin: dp(220)
+            anchors.left: parent.left
+            anchors.leftMargin: dp(40)
+            width: 40
+            height: 40
+            source: "../../assets/opponent/plant.png"
+        }
+
+
+
+
     }
 
     Rectangle {
